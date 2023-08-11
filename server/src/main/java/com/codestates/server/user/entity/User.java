@@ -37,13 +37,13 @@ public class User {
 
     private String image;
 
-    @Column(name = "가입일")
+    @Column(name = "createdAt")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     // ⏹️ 추후 추가 예정 (매핑 필요)
-    // totalUserQuestions
+    // private List<Question> questions = new ArrayList<>();
 
     // ⏹️ 추후 추가 예정 (매핑 필요)
-    // totalUserAnswers
+    // private List<Answer> answers = new ArrayList<>();
 
 }

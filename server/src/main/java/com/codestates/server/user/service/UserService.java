@@ -57,7 +57,6 @@ public class UserService {
     // 🔔 Question & Comment 쓸 때 로그인 안 되어 있으면 해당 메서드 사용 해야 함
     private User getVerifiedUser(long userId) {
 
-        // ✅ userId로만 검증하면 되는지
         Optional<User> user = userRepository.findById(userId);
 
         User getUser =
