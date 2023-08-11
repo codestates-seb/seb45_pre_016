@@ -27,7 +27,7 @@ public class User {
     private long userId;    // Long으로 쓸 지? long으로 쓸 지?
 
     @Column(nullable = false, unique = true)
-    private String username;
+    private String userName;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -37,7 +37,7 @@ public class User {
 
     private String image;
 
-    @Column(name = "createdAt")
+    @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     // ⏹️ 추후 추가 예정 (매핑 필요)

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class UserResponseDto {
 
-    private String username;
+    private String userName;
 
     private String image;
 
