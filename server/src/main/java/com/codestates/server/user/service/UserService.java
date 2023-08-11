@@ -57,7 +57,6 @@ public class UserService {
     // 🔔 Question & Comment 쓸 때 로그인 안 되어 있으면 해당 메서드 사용 해야 함
     private User getVerifiedUser(long userId) {
 
-        // ✅ userId로만 검증하면 되는지
         Optional<User> user = userRepository.findById(userId);
 
         User getUser =
@@ -69,7 +68,7 @@ public class UserService {
     // 중복 가입인지 확인 -> 있으면 예외 던지기 ("이미 있는 회원 입니다.")
     private void verifyExistsUser(String email) {
 
-        Optional<User> user = userRepository.findByemail(email);
+        Optional<User> user = userRepository.findByEmail(email);
 
         if(user.isPresent())
             throw new RuntimeException();

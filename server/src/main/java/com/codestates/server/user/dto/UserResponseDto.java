@@ -3,20 +3,20 @@ package com.codestates.server.user.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class UserResponseDto {
 
     private String username;
 
-    private String email;
-
     private String image;
 
-    private String createdAt;
+//    ⏹️ 작성 예정
+//    private List<UserQuestions> userQuestionList;
 
-    private long totalUserQuestions;
-
-    private long totalUserAnswers;
+//    ⏹️ 작성 예정
+//    private List<UserAnswers> userAnswersList;
 
 }
