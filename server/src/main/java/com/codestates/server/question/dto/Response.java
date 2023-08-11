@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+
+/**
+ * API 넘길때 어떻게 넘기면 좋을지 몰라서 일단 만들어놨습니다..!
+ */
 @Getter
 @Setter
 @AllArgsConstructor

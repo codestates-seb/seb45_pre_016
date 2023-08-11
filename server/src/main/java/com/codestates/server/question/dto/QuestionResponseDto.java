@@ -19,7 +19,5 @@ public class QuestionResponseDto {
 
     private Long views;
 
-    private LocalDateTime created_At;
-
     private LocalDateTime modified_At;
 }
