@@ -9,14 +9,12 @@ public class UserResponseDto {
 
     private String username;
 
-    private String email;
-
     private String image;
 
-    private String createdAt;
+//    ⏹️ 리스트 변경 및 매핑 예정
+//    private List<UserQuestion> userQuestions;
 
-    private long totalUserQuestions;
-
-    private long totalUserAnswers;
+//    ⏹️ 리스트 변경 및 매핑 예정
+//    private List<UserAnswer> userAnswers;
 
 }
