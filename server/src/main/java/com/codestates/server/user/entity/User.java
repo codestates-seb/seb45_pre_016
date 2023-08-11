@@ -24,6 +24,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private long userId;    // Long으로 쓸 지? long으로 쓸 지?
 
     @Column(nullable = false, unique = true)
@@ -37,7 +38,7 @@ public class User {
 
     private String image;
 
-    @Column(name = "createdAt")
+    @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     // ⏹️ 추후 추가 예정 (매핑 필요)
