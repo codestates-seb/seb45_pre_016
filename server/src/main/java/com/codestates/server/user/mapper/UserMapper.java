@@ -17,5 +17,5 @@ public interface UserMapper {
     User userPatchDtoToUser(UserPatchDto userPatchDto);
     UserLoginDto userToUserLoginDto(User user);
     UserResponseDto userToUserResponseDto(User user);
-    List<UserResponseDto> userToUserResponseListDto(List<User> users);  // ✅ 추후 변경 예정
+    List<UserResponseDto> usersToUserResponseDto(List<User> users);
 }

@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @Getter
@@ -17,6 +15,7 @@ public class Tag {
 
     @Id
     @Column(name = "tag_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long tagId;
 
     @Column(name = "tag_name", nullable = false, unique = true)

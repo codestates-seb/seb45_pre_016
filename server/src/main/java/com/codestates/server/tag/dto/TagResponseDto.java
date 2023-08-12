@@ -8,4 +8,5 @@ import lombok.Setter;
 public class TagResponseDto {
 
     private String tagName;
+
 }

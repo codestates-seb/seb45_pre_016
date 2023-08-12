@@ -9,6 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TagPostDto {
 
-    private final String tagName;
+    // ⏹️ notnull 이나 notblank가 필요할까요?
+    private String tagName;
 
 }
