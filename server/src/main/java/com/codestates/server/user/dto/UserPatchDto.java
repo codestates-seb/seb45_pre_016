@@ -12,6 +12,6 @@ public class UserPatchDto {
     private long userId;
 
     @NotBlank(message = "회원 이름은 필수값입니다.")
-    private String username;
+    private String userName;
 
 }
