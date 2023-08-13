@@ -3,6 +3,9 @@ package com.codestates.server.user.service;
 import com.codestates.server.user.entity.User;
 import com.codestates.server.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +32,7 @@ public class UserService {
 
         User getUser = getVerifiedUser(user.getUserId());
 
-        Optional.ofNullable(user.getUsername()).ifPresent(name -> getUser.setUsername(name));
+        Optional.ofNullable(user.getUserName()).ifPresent(name -> getUser.setUserName(user.getUserName()));
 
         return userRepository.save(getUser);
     }
@@ -39,13 +42,23 @@ public class UserService {
         return getVerifiedUser(userId);
     }
 
-
     public List<User> getUsers() {
         // ⏹️ pagination 변경 예정
+
         List<User> users = userRepository.findAll();
 
         return users;
     }
+/*
+ * Pagination 구현한 getUsers()
+ */
+
+//    public Page<User> getUsers(int page, int size) {
+//        // ⏹️ pagination 변경 예정
+//        return userRepository.findAll(PageRequest.of(page, size,
+//                Sort.by("userId").descending()));
+//
+//    }
 
     public void deleteUser(long userId) {
         User getUser = getVerifiedUser(userId);
@@ -57,7 +70,6 @@ public class UserService {
     // 🔔 Question & Comment 쓸 때 로그인 안 되어 있으면 해당 메서드 사용 해야 함
     private User getVerifiedUser(long userId) {
 
-        // ✅ userId로만 검증하면 되는지
         Optional<User> user = userRepository.findById(userId);
 
         User getUser =

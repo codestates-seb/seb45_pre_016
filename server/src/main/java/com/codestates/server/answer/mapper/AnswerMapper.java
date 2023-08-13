@@ -22,6 +22,7 @@ public interface AnswerMapper {
 
     List<AnswerResponseDto> answerListToAnswerResponseDto(List<Answer> answer);
 }
+
 //@Mapper(componentModel = "Spring")
 //public interface AnswerMapper {
 //    // AnswerPostDto -> Answer
@@ -56,4 +57,3 @@ public interface AnswerMapper {
 //        return answerResponseDto;
 //    }
 //
-//    List<AnswerResponseDto> answersToAnswerResponseDto(List<Answer> answers)
