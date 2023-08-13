@@ -1,5 +1,6 @@
 package com.codestates.server.answer.entity;
 
+import com.codestates.server.question.entity.Question;
 import com.codestates.server.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
