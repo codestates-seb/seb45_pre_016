@@ -3,6 +3,8 @@ package com.codestates.server.question.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 
 /**
@@ -10,8 +12,12 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@AllArgsConstructor
-public class Response<T> {
+public class Response<T> extends ResponseEntity<T> {
+
     private Long userId;
     private T data;
+
+    public Response(T body, HttpStatus status) {
+        super(body, status);
+    }
 }

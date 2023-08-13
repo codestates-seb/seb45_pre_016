@@ -22,5 +22,7 @@ public class QuestionPostDto {
     @NotBlank
     private int views;
 
+    //tag 필요
+
 
 }

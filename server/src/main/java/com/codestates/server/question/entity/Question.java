@@ -1,5 +1,6 @@
 package com.codestates.server.question.entity;
 
+import com.codestates.server.user.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -7,6 +8,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.lang.reflect.Member;
 import java.time.LocalDateTime;
 
 @Entity
@@ -29,13 +31,13 @@ public class Question {
     @Column(name = "question_views", nullable = true)
     private Long views;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @CreatedDate
     private LocalDateTime created_At;
 
     @LastModifiedDate
     private LocalDateTime modified_At;
-
-    //매핑 해야함.
-    @Column
-    private Long userId;
 }

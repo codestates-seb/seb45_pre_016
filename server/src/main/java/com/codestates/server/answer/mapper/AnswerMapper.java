@@ -4,6 +4,7 @@ import com.codestates.server.answer.dto.AnswerPatchDto;
 import com.codestates.server.answer.dto.AnswerPostDto;
 import com.codestates.server.answer.dto.AnswerResponseDto;
 import com.codestates.server.answer.entity.Answer;
+import com.codestates.server.question.entity.Question;
 import com.codestates.server.user.entity.User;
 import org.mapstruct.Mapper;
 
