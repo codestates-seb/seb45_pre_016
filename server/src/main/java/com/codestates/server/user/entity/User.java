@@ -3,6 +3,8 @@ package com.codestates.server.user.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,15 +21,17 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "USERS")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private long userId;    // Long으로 쓸 지? long으로 쓸 지?
 
-    @Column(nullable = false, unique = true)
-    private String username;
+    @Column(name = "user_name", nullable = false, unique = true)
+    private String userName;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -37,13 +41,13 @@ public class User {
 
     private String image;
 
-    @Column(name = "가입일")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @CreatedDate
+    private LocalDateTime created_at;
 
     // ⏹️ 추후 추가 예정 (매핑 필요)
-    // totalUserQuestions
+    // private List<Question> questionList = new ArrayList<>();
 
     // ⏹️ 추후 추가 예정 (매핑 필요)
-    // totalUserAnswers
+    // private List<Answer> answerList = new ArrayList<>();
 
 }

@@ -12,3 +12,4 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     @Query(value = "SELECT * FROM answer WHERE question_id = :questionId", nativeQuery = true)
     List<Answer> findByQuestionId(long questionId);
 }
+

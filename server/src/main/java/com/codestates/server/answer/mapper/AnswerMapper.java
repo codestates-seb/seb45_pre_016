@@ -24,6 +24,17 @@ public interface AnswerMapper {
 
     List<AnswerResponseDto> answerListToAnswerResponseDto(List<Answer> answer);
 }
+//package com.codestates.server.answer.mapper;
+//
+//import com.codestates.server.answer.dto.AnswerPatchDto;
+//import com.codestates.server.answer.dto.AnswerPostDto;
+//import com.codestates.server.answer.dto.AnswerResponseDto;
+//import com.codestates.server.answer.entity.Answer;
+//import com.codestates.server.user.entity.User;
+//import org.mapstruct.Mapper;
+//
+//import java.util.List;
+//
 //@Mapper(componentModel = "Spring")
 //public interface AnswerMapper {
 //    // AnswerPostDto -> Answer
@@ -58,4 +69,3 @@ public interface AnswerMapper {
 //        return answerResponseDto;
 //    }
 //
-//    List<AnswerResponseDto> answersToAnswerResponseDto(List<Answer> answers)
