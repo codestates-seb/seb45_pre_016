@@ -1,16 +1,21 @@
 package com.codestates.server.question.service;
 
 import com.codestates.server.question.entity.Question;
+import com.codestates.server.question.entity.QuestionTag;
 import com.codestates.server.question.repository.QuestionRepository;
+import com.codestates.server.question.repository.QuestionTagRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Slf4j
+@Transactional
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
@@ -18,7 +23,11 @@ public class QuestionService {
     public QuestionService(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
+
     public Question createQuestion(Question question){
+        question.setViews(0L);
+
+        question.addQuestionTags(List.of(new QuestionTag(), new QuestionTag())); //수정 필요
         return questionRepository.save(question);
     }
 
@@ -45,8 +54,7 @@ public class QuestionService {
     }
 
     public List<Question> findAllQuestions(){  //findAll
-        List<Question> questionList = questionRepository.findAll();
-        return questionList;
+        return questionRepository.findAll();
     }
 
     public void deleteQuestion(Long questionId){
