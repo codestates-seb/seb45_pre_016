@@ -17,16 +17,16 @@ public class TagService {
     private final TagRepository tagRepository;
 
     /*
-     * Pagination 구현한 getUsers()
+     * Pagination 구현한 getTags()
      */
-//    public Page<Tag> getUsers(int page, int size) {
+//    public Page<Tag> getTags(int page, int size) {
 //    // ⏹️ pagination 변경 예정
 //    return tagRepository.findAll(PageRequest.of(page, size,
 //            Sort.by("tagId").descending()));
 //
 //    }
 
-    public List<Tag> getUsers() {
+    public List<Tag> getTags() {
         // ⏹️ pagination 변경 예정
 
         List<Tag> tags = tagRepository.findAll();

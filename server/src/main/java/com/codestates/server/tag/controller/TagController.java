@@ -29,28 +29,28 @@ public class TagController {
     private final TagMapper mapper;
 
     @GetMapping
-    public ResponseEntity getUsers() {
+    public ResponseEntity getTags() {
 
         // ⏹️ Pagination 적용 전
-        List<Tag> users = tagService.getUsers();
-        List<Tag> response = mapper.tagsToTagResponseDto(users);
+        List<Tag> tags = tagService.getTags();
+        List<Tag> response = mapper.tagsToTagResponseDto(tags);
 
         return new  ResponseEntity(response, HttpStatus.OK);
     }
 
 
     /*
-     * Pagination 구현한 getTags)
+     * Pagination 구현한 getTags
      */
 //    @GetMapping
-//    public ResponseEntity getUsers(@Positive @RequestParam int page,
+//    public ResponseEntity getTags(@Positive @RequestParam int page,
 //                                   @Positive @RequestParam int size) {
 //
-//        Page<Tag> userPages = tagService.getTag(page -1, size);
-//        List<Tag> users = userPages.getContent();
+//        Page<Tag> tagPages = tagService.getTags(page -1, size);
+//        List<Tag> tags = tagPages.getContent();
 //
 //        return  new ResponseEntity(
-//                new MultiResponseDto<>(mapper.tagsToTagResponseDto(users), userPages), HttpStatus.OK);
+//                new MultiResponseDto<>(mapper.tagsToTagResponseDto(users), tagPages), HttpStatus.OK);
 //    }
 
 
