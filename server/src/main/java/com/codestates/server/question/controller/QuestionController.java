@@ -35,6 +35,7 @@ public class QuestionController {
      */
     @PostMapping("/ask")
     public ResponseEntity postQuestion(@RequestBody QuestionPostDto questionPostDto){
+        Long userId = questionPostDto.getUserId();
         Question question = questionService.createQuestion(mapper.questionPostDtoToQuestion(questionPostDto));
 
         URI location = UriCreator.createUri("/questions", question.getQuestionId());

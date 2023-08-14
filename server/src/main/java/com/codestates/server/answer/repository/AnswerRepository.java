@@ -1,3 +1,19 @@
+<<<<<<< HEAD
+package com.codestates.server.answer.repository;
+
+import com.codestates.server.answer.entity.Answer;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface AnswerRepository extends JpaRepository<Answer, Long> {
+    @Query(value = "SELECT * FROM answer WHERE question_id = :questionId", nativeQuery = true)
+    List<Answer> findByQuestionId(long questionId);
+}
+=======
 //package com.codestates.server.answer.repository;
 //
 //import com.codestates.server.answer.entity.Answer;
@@ -13,3 +29,4 @@
 //    List<Answer> findByQuestionId(long questionId);
 //}
 //6
+>>>>>>> 858dc8ef05f3b11a133ff6f57c332733b26ce754

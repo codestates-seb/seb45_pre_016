@@ -3,6 +3,7 @@ package com.codestates.server.question.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.catalina.LifecycleState;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,5 +20,8 @@ public class QuestionResponseDto {
 
     private Long views;
 
+    //태그 필요
+
     private LocalDateTime modified_At;
+
 }
