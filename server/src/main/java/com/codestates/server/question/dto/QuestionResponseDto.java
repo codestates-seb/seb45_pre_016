@@ -27,9 +27,7 @@ public class QuestionResponseDto {
      * tag 완성되면 questiontags -> tag로 교체. (이부분 구현되야함)
      */
 
-//    private List<Tag> tags;
-
-    private List<QuestionTag> questionTags;
+    private List<Tag> tags;
 
     private LocalDateTime modified_At;
 

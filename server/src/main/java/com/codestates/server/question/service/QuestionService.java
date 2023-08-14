@@ -27,7 +27,7 @@ public class QuestionService {
     public Question createQuestion(Question question){
         question.setViews(0L);
 
-        question.addQuestionTags(List.of(new QuestionTag(), new QuestionTag())); //수정 필요
+
         return questionRepository.save(question);
     }
 

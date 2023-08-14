@@ -25,18 +25,18 @@ public interface QuestionMapper {
  * Question - tag 연관에서 필요한데... tag 부분 건들면 안될것같아서 일단 작성하다가 멈추고 주석처리 해놓습니다 !
  */
         List<String> tagNames = questionPostDto.getTagNames();
-//        List<Tag> tags = new ArrayList<>();
-//
-//        for (String tagName : tagNames) {
-//            Tag tag = new Tag();
-//            tag.setTagName(tagName);
-//            tags.add(tag);
-//        }
+        List<Tag> tags = new ArrayList<>();
+        List<QuestionTag> questionTags = new ArrayList<>();
 
         for (String tagName : tagNames) {
-            QuestionTag questionTag = new QuestionTag();
+            Tag tag = new Tag(tagName); //태그name 넣은상태로 생성
+            QuestionTag questionTag = new QuestionTag(); //questiontag 만들어서 question 넣어주고
             questionTag.setQuestion(question);
+            questionTag.setTag(tag);
+            questionTags.add(questionTag);
+            tags.add(tag);
         }
+        question.addQuestionTags(questionTags);
 
         user.setUserId(questionPostDto.getUserId());
 
@@ -50,5 +50,21 @@ public interface QuestionMapper {
 
     Question questionPatchDtoToQuestion(QuestionPatchDto questionPatchDto);
 
-    QuestionResponseDto questionToQuestionResponseDto(Question question);
+    default QuestionResponseDto questionToQuestionResponseDto(Question question, List<Tag> tags){
+        if ( question == null ) {
+            return null;
+        }
+
+        QuestionResponseDto questionResponseDto = new QuestionResponseDto();
+
+        questionResponseDto.setQuestionId( question.getQuestionId() );
+        questionResponseDto.setTitle( question.getTitle() );
+        questionResponseDto.setContent( question.getContent() );
+        questionResponseDto.setViews( question.getViews() );
+        questionResponseDto.setModified_At( question.getModified_At() );
+
+        questionResponseDto.setTags(tags);
+
+        return questionResponseDto;
+    };
 }
