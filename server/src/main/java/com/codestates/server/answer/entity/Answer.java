@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 package com.codestates.server.answer.entity;
 
 import com.codestates.server.question.entity.Question;
@@ -46,7 +46,7 @@ public class Answer {
         this.user = user;
     }
 }
-=======
+
 //package com.codestates.server.answer.entity;
 //
 //import com.codestates.server.user.entity.User;
@@ -93,4 +93,3 @@ public class Answer {
 //        this.user = user;
 //    }
 //}
->>>>>>> 858dc8ef05f3b11a133ff6f57c332733b26ce754
