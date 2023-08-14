@@ -1,11 +1,15 @@
 package com.codestates.server.tag.entity;
 
 
+import com.codestates.server.question.entity.QuestionTag;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -21,6 +25,7 @@ public class Tag {
     @Column(name = "tag_name", nullable = false, unique = true)
     private String tagName;
 
-    // ⏹️ Question 매핑 예정
-    // private List<Question> questions = new ArrayList<>();
+    @OneToMany
+    private List<QuestionTag> questionTags = new ArrayList<>();
+
 }

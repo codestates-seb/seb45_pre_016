@@ -4,6 +4,7 @@ import com.codestates.server.question.dto.QuestionPatchDto;
 import com.codestates.server.question.dto.QuestionPostDto;
 import com.codestates.server.question.dto.QuestionResponseDto;
 import com.codestates.server.question.entity.Question;
+import com.codestates.server.question.entity.QuestionTag;
 import com.codestates.server.question.mapper.QuestionMapper;
 import com.codestates.server.question.service.QuestionService;
 import com.codestates.server.question.uri.UriCreator;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class QuestionController {
      */
     @PostMapping("/ask")
     public ResponseEntity postQuestion(@RequestBody QuestionPostDto questionPostDto){
-        Long userId = questionPostDto.getUserId();
+
         Question question = questionService.createQuestion(mapper.questionPostDtoToQuestion(questionPostDto));
 
         URI location = UriCreator.createUri("/questions", question.getQuestionId());
