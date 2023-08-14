@@ -1,6 +1,6 @@
 package com.codestates.server.security.auth.filter;
 
-import com.codestates.server.security.auth.dto.LoginDto;
+import com.codestates.server.security.auth.dto.UserLoginDto;
 import com.codestates.server.security.auth.jwt.JwtTokenizer;
 import com.codestates.server.user.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,11 +46,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                                 HttpServletResponse response) {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
+        UserLoginDto loginDto = objectMapper.readValue(request.getInputStream(), UserLoginDto.class);
 
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getUserName(), loginDto.getPassword());
-        return super.attemptAuthentication(request, response);
+                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+
+        return authenticationManager.authenticate(authenticationToken);
     }
 
     /*
