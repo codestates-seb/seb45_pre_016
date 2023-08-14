@@ -2,7 +2,8 @@ package com.codestates.server.answer.service;
 
 import com.codestates.server.answer.entity.Answer;
 import com.codestates.server.answer.repository.AnswerRepository;
-<<<<<<< HEAD
+import com.codestates.server.question.entity.Question;
+import com.codestates.server.question.service.QuestionService;
 import com.codestates.server.user.entity.User;
 import com.codestates.server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,20 +13,6 @@ import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
-// 예외처리 및 코드 추가 예정.
-@Service
-@RequiredArgsConstructor
-@Transactional
-public class AnswerService {
-
-=======
-import com.codestates.server.question.entity.Question;
-import com.codestates.server.question.service.QuestionService;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.List;
 
 // 예외처리 추가 예정.
 @Service
@@ -73,5 +60,4 @@ public class AnswerService {
     public Answer findAnswerById(long answerId) {
         return answerRepository.findById(answerId).orElse(null);
     }
->>>>>>> 2caaa18d6d7da6368f90be6d61252c554ff463f1
 }
