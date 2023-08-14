@@ -50,7 +50,7 @@ public class TagController {
 //        List<Tag> tags = tagPages.getContent();
 //
 //        return  new ResponseEntity(
-//                new MultiResponseDto<>(mapper.tagsToTagResponseDto(users), tagPages), HttpStatus.OK);
+//                new MultiResponseDto<>(mapper.tagsToTagResponseDto(tags), tagPages), HttpStatus.OK);
 //    }
 
 
