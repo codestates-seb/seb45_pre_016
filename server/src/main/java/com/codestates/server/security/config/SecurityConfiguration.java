@@ -1,14 +1,19 @@
 package com.codestates.server.security.config;
 
 import com.codestates.server.security.auth.filter.JwtAuthenticationFilter;
+import com.codestates.server.security.auth.filter.JwtVerificationFilter;
+import com.codestates.server.security.auth.handler.UserAuthenticationFailureHandler;
+import com.codestates.server.security.auth.handler.UserAuthenticationSuccessHandler;
 import com.codestates.server.security.auth.jwt.JwtTokenizer;
+import com.codestates.server.security.auth.utils.CustomAuthorityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.SecurityBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,6 +30,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
+    private final CustomAuthorityUtils authorityUtils;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -33,11 +39,18 @@ public class SecurityConfiguration {
                 .and()
                 .csrf().disable()
                 .cors(withDefaults())   // SecurityConfiguration Bean 이용
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 생성하지 않도록 설정
+                .and()
                 .formLogin().disable()
                 .httpBasic().disable()
                 .apply(new CustomFilterConfigurer())    // CustomFilterConfigurer 인스턴스 생성
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
+                        .antMatchers(HttpMethod.POST, "/users/signup").permitAll()         // (1) 추가
+                        .antMatchers(HttpMethod.PATCH, "/users/mypage/edit/**").hasRole("USER")  // (2) 추가
+                        .antMatchers(HttpMethod.GET, "/users/usersinfo").hasRole("ADMIN")     // (3) 추가
+                        .antMatchers(HttpMethod.GET, "/users/mypage/**").hasAnyRole("USER", "ADMIN")  // (4) 추가
+                        .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("USER")  // (5) 추가
                         .anyRequest().permitAll()
                 );
         return http.build();
@@ -64,6 +77,7 @@ public class SecurityConfiguration {
       *
      */
     private class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
+
         @Override
         public void configure(HttpSecurity builder) throws Exception {
 
@@ -71,9 +85,14 @@ public class SecurityConfiguration {
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
             jwtAuthenticationFilter.setFilterProcessesUrl("/users/login");   // ⏹️  request URL 체크
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new UserAuthenticationSuccessHandler());
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new UserAuthenticationFailureHandler());
 
-            builder.addFilter(jwtAuthenticationFilter); // Spring Security Filter Chain에 추가
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
 
+            builder
+                    .addFilter(jwtAuthenticationFilter) // Spring Security Filter Chain에 추가
+                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);  // JwtAuthenticationFilter 뒤에 jwtVerificationFilter 보내겠다
         }
     }
 }
