@@ -32,10 +32,10 @@ public class MemberAuthenticationFailureHandler implements AuthenticationFailure
 
         Gson gson = new Gson();
 
-//        ErrorResponse errorResponse = ErrorResponse.of(HttpStatus.UNAUTHORIZED);
-//
-//        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-//        response.setStatus(HttpStatus.UNAUTHORIZED.value());
-//        response.getWriter().write(gson.toJson(errorResponse, ErrorResponse.class));
+        ErrorResponse errorResponse = ErrorResponse.of(HttpStatus.UNAUTHORIZED);
+
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.getWriter().write(gson.toJson(errorResponse, ErrorResponse.class));
     }
 }
