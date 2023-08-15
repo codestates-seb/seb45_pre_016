@@ -19,6 +19,7 @@ public interface AnswerMapper {
     @Mapping(source = "user.userId", target = "userId")
     @Mapping(source = "question.questionId", target = "questionId")
     @Mapping(source = "user.name", target = "name")
+    AnswerResponseDto answerToAnswerResponseDto(Answer answer);
 
     List<AnswerResponseDto> answerListToAnswerResponseDto(List<Answer> answer);
 }

@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class AnswerResponseDto {
-    @Positive
     private Long userId;
     private Long questionId;
     private Long answerId;

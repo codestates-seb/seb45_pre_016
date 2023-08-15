@@ -23,7 +23,7 @@ public class Answer {
     private String content;
 
     @CreatedDate
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "CREATED_AT", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @LastModifiedDate
@@ -36,7 +36,7 @@ public class Answer {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBER_ID")
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     public Answer(Question question, String content, User user) {
