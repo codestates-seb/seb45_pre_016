@@ -8,6 +8,9 @@ spring:
   jpa:          #JPA 설정
     hibernate:
       ddl-auto: create
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
 logging:         #로그 레벨 설정
   level:
