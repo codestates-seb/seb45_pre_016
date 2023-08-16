@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PROJECT_ROOT="/home/ubuntu/app"
+PROJECT_ROOT="/home/ubuntu/app/server"
 JAR_FILE="$PROJECT_ROOT/server.jar"
 S3_BUCKET_NAME="moneymade-github-action-s3-bucket"
 
