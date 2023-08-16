@@ -30,6 +30,12 @@ jobs:
           java-version: 11
           distribution: 'temurin'
 
+    # appspec.yml, scripts(start.sh, stop.sh)디렉토리 복사
+      - name: Copy appspec.yml to current directory
+        run: |
+            cp server/appspec.yml .
+        shell: bash
+
       - name: Build with Gradle and print build result
         run: |
           cd server
