@@ -41,13 +41,14 @@ public class JwtTokenizer {
     
     }
 
-    /*
+    /**
+     *
      * 인증된 사용자에게 JWT 최초 발급
      * JWT 생성 메서드
-     * claim : (인증된) 사용자 정보
-     * subject : 제목 추가
+     *  @param claim : (인증된) 사용자 정보
+     *  @param subject : 제목 추가
      * issuedAt : 발행일자 설정
-     * expiration : 만려 일시
+     *  @param expiration : 만려 일시
      * signwith : 서명을 위한 Key 객체 설정
      * compact : JWT 생성 및 직렬화
     */
@@ -67,6 +68,14 @@ public class JwtTokenizer {
                 .compact();
     }
 
+    /**
+     * refreshToken 생성
+     *
+     * @param subject
+     * @param expiration
+     * @param base64EncodedSecretKey
+     * @return
+     */
     public String generateRefreshToken(String subject, Date expiration, String base64EncodedSecretKey) {
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
@@ -104,6 +113,11 @@ public class JwtTokenizer {
                 .parseClaimsJws(jws);
     }
 
+    /**
+     *  토큰 유효기간
+     * @param expirationMinutes
+     * @return
+     */
     public Date getTokenExpiration(int expirationMinutes) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, expirationMinutes);
