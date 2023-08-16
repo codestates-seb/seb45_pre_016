@@ -2,6 +2,8 @@ package com.codestates.server.security.auth.filter;
 
 import com.codestates.server.security.auth.jwt.JwtTokenizer;
 import com.codestates.server.security.auth.utils.CustomAuthorityUtils;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -35,11 +37,18 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        // JWT 토큰 검증, 권한 정보 추출
-        Map<String, Object> claims = verifyJws(request);
-
-        // 추출 권한 정보를 보안 컨텍스트에 인증 정보로 설정
-        setAuthenticationToContext(claims);
+        try {
+            // JWT 토큰 검증, 권한 정보 추출
+            Map<String, Object> claims = verifyJws(request);
+            // 추출 권한 정보를 보안 컨텍스트에 인증 정보로 설정
+            setAuthenticationToContext(claims);
+        } catch (SignatureException se) {
+            request.setAttribute("exception", se);
+        } catch (ExpiredJwtException ee) {
+            request.setAttribute("exception", ee);
+        } catch (Exception e) {
+            request.setAttribute("exception", e);
+        }
 
         // 필터 체인 계속 진행
         filterChain.doFilter(request, response);
