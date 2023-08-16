@@ -37,15 +37,15 @@ jobs:
           cp -r server/scripts .
         shell: bash
 
-      - name: Copy jar file to current directory
-        run: cp server/build/libs/*.jar .
-        shell: bash
-
       - name: Build with Gradle and print build result
         run: |
           cd server
           chmod +x gradlew
           ./gradlew build -x test
+        shell: bash
+
+      - name: Copy jar file to current directory
+        run: cp server/build/libs/*.jar .
         shell: bash
 
       - name: Make zip file
