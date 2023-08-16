@@ -30,11 +30,17 @@ jobs:
           java-version: 11
           distribution: 'temurin'
 
-    # appspec.yml, scripts(start.sh, stop.sh)디렉토리 복사
+      # appspec.yml, scripts(start.sh, stop.sh)디렉토리 복사
       - name: Copy appspec.yml to current directory
         run: |
-            cp server/appspec.yml .
-            cp -r server/scripts .
+          cp server/appspec.yml .
+          cp -r server/scripts .
+          cd server/scripts .
+          chmod +x start.sh stop.sh
+        shell: bash
+
+      - name: Copy jar file to current directory
+        run: cp server/build/libs/*.jar .
         shell: bash
 
       - name: Build with Gradle and print build result
@@ -42,10 +48,6 @@ jobs:
           cd server
           chmod +x gradlew
           ./gradlew build -x test
-        shell: bash
-
-      - name: Copy jar file to current directory
-        run: cp server/build/libs/*.jar .
         shell: bash
 
       - name: Make zip file
@@ -66,7 +68,6 @@ jobs:
             --ignore-hidden-files \
             --s3-location s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip \
             --source .
-
       - name: Code Deploy
         run: |
           aws deploy create-deployment \
@@ -74,4 +75,3 @@ jobs:
           --deployment-config-name CodeDeployDefault.AllAtOnce \
           --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
           --s3-location bucket=$S3_BUCKET_NAME,key=$GITHUB_SHA.zip,bundleType=zip
-
