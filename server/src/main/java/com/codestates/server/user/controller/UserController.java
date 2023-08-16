@@ -56,8 +56,7 @@ public class UserController {
     /*
      * user 회원 정보수정
      * @param userPatchDto
-     * ✅ Patch는 Uri로 받으면 안 될 것 같아요..!
-     * patch 기능은 수정을 위해서 사용되는 거라서요 : )
+     * ✅ Patch는 수정 기능이라 response로 Response했습니다!
      */
     @PatchMapping("/mypage/edit/{user-id}")
     public ResponseEntity patchUser(@PathVariable("user-id") @Positive long userId,

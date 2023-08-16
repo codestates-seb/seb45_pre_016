@@ -1,17 +1,19 @@
 package com.codestates.server.user.service;
 
+import com.codestates.server.security.auth.utils.CustomAuthorityUtils;
+import com.codestates.server.security.help.UserRegistrationApplicationEvent;
 import com.codestates.server.user.entity.User;
 import com.codestates.server.user.repository.UserRepository;
+import org.springframework.context.ApplicationEventPublisher;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 @Service
 @AllArgsConstructor
 //@Transactional
@@ -19,12 +21,30 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    // 내부에서 발생하는 사건을 다른 곳에 알릴 수 있음
+    private final ApplicationEventPublisher publisher;
+
+    private final PasswordEncoder passwordEncoder;
+
+    private final CustomAuthorityUtils authorityUtils;
+
     // 회원 가입에 대한 메서드
     public User createUser(User user) {
 
         verifyExistsUser(user.getEmail());
 
-        return userRepository.save(user);
+        // Password 단방향 암호화
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
+
+        // DB에 등록하는 User 의 Role 정보를 생성하고 저장
+        List<String> roles = authorityUtils.createRoles(user.getEmail());
+        user.setRoles(roles);
+
+        User savedUser = userRepository.save(user);
+
+        publisher.publishEvent(new UserRegistrationApplicationEvent(savedUser));
+        return savedUser;
     }
 
     // 회원 정보 수정에 대한 메서드
@@ -32,7 +52,8 @@ public class UserService {
 
         User getUser = getVerifiedUser(user.getUserId());
 
-        Optional.ofNullable(user.getUserName()).ifPresent(name -> getUser.setUserName(user.getUserName()));
+        Optional.ofNullable(user.getUserName())
+                .ifPresent(name -> getUser.setUserName(user.getUserName()));
 
         return userRepository.save(getUser);
     }

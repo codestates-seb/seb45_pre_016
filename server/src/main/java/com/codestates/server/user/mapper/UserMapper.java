@@ -1,6 +1,6 @@
 package com.codestates.server.user.mapper;
 
-import com.codestates.server.user.dto.UserLoginDto;
+import com.codestates.server.security.auth.dto.UserLoginDto;
 import com.codestates.server.user.dto.UserPatchDto;
 import com.codestates.server.user.dto.UserPostDto;
 import com.codestates.server.user.dto.UserResponseDto;
