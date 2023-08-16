@@ -28,23 +28,14 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 11
-          distribution: 'zulu'
+          distribution: 'temurin'
 
-      #- name: Set yaml file
-      #  uses: microsoft/variable-substitution@v1
-      #  with:
-      #    files: ${{ env.RESOURCE_PATH }}
-      #  env:
-      #    override.value: 'from deploy.yaml'
-
-      - name: Build with Gradle
-        uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
-        with:
-          arguments: clean build -x test
-
-      - name: Build with Gradle
-        run: ./gradlew build
-        shell: bash
+      - name: Build with Gradle and print build result
+        run: |
+          cd server
+          chmod +x gradlew
+          ./gradlew build -x test
+        shell: bash    
 
       - name: Make zip file
         run: zip -r ./$GITHUB_SHA.zip .
