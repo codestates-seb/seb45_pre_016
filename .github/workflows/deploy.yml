@@ -37,9 +37,10 @@ jobs:
       #  env:
       #    override.value: 'from deploy.yaml'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x server/gradlew
-        shell: bash
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+        with:
+          arguments: clean build -x test
 
       - name: Build with Gradle
         run: ./gradlew build
