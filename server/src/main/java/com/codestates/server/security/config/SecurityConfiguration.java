@@ -2,6 +2,8 @@ package com.codestates.server.security.config;
 
 import com.codestates.server.security.auth.filter.JwtAuthenticationFilter;
 import com.codestates.server.security.auth.filter.JwtVerificationFilter;
+import com.codestates.server.security.auth.handler.UserAccessDeniedHandlerIpl;
+import com.codestates.server.security.auth.handler.UserAuthenticationEntryPointImp;
 import com.codestates.server.security.auth.handler.UserAuthenticationFailureHandler;
 import com.codestates.server.security.auth.handler.UserAuthenticationSuccessHandler;
 import com.codestates.server.security.auth.jwt.JwtTokenizer;
@@ -10,6 +12,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -43,15 +47,24 @@ public class SecurityConfiguration {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
+                .exceptionHandling()    // 예외 처리
+                .authenticationEntryPoint(new UserAuthenticationEntryPointImp())
+                .accessDeniedHandler(new UserAccessDeniedHandlerIpl())
+                .and()
                 .apply(new CustomFilterConfigurer())    // CustomFilterConfigurer 인스턴스 생성
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST, "/users/signup").permitAll()         // (1) 추가
-                        .antMatchers(HttpMethod.PATCH, "/users/mypage/edit/**").hasRole("USER")  // (2) 추가
-                        .antMatchers(HttpMethod.GET, "/users/usersinfo").hasRole("ADMIN")     // (3) 추가
-                        .antMatchers(HttpMethod.GET, "/users/mypage/**").hasAnyRole("USER", "ADMIN")  // (4) 추가
-                        .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("USER")  // (5) 추가
-                        .anyRequest().permitAll()
+                        .antMatchers(HttpMethod.POST, "/users/signup").permitAll()         // 회원가입 전체 접근 가능
+                        .antMatchers(HttpMethod.PATCH, "/users/mypage/edit/**").hasRole("USER")  // 마이페이지 수정 -> 해당 user만
+                        .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")     // userinfo (전체 회원 조회) -> 전체 접근 가능
+                        .antMatchers(HttpMethod.GET, "/users/mypage/**").hasAnyRole("USER", "ADMIN")  // mypage 역할 가진 사용자
+                        .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("USER")  // user 삭제 page -> 해당 user 만
+                        .antMatchers(HttpMethod.POST, "/questions/ask").hasAnyRole("USER", "ADMIN") // user/ask 역할 가진 사용자
+                        .antMatchers(HttpMethod.PATCH, "/quesitons/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers(HttpMethod.GET, "/question/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/guestions/**").permitAll()   // 질문 조회 -> 전체 접근 가능
+                        .antMatchers(HttpMethod.DELETE, "/questions/**").hasAnyRole("USER", "ADMIN")
+
                 );
         return http.build();
     }
