@@ -44,6 +44,10 @@ jobs:
           ./gradlew build -x test
         shell: bash
 
+      - name: Copy jar file to current directory
+        run: cp server/build/libs/*.jar .
+        shell: bash
+
       - name: Make zip file
         run: zip -r ./$GITHUB_SHA.zip .
         shell: bash
@@ -70,3 +74,4 @@ jobs:
           --deployment-config-name CodeDeployDefault.AllAtOnce \
           --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
           --s3-location bucket=$S3_BUCKET_NAME,key=$GITHUB_SHA.zip,bundleType=zip
+
