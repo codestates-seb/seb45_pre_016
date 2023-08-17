@@ -54,10 +54,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         return authenticationManager.authenticate(authenticationToken);
     }
 
-    /*
-      * 클라이언트의 인증 정보를 이용해 인증에 성공할 경우 호출
-      * delegateAccessToken(user) : Access Token 생성
-      * delegateRefreshToken(user) : Refresh Token 생성
+    /**
+     * 클라이언트의 인증 정보를 이용해 인증에 성공할 경우 호출
+     * delegateAccessToken(user) : Access Token 생성
+     * delegateRefreshToken(user) : Refresh Token 생성
+     *
+     * @param request
+     * @param response
+     * @param chain
+     * @param authResult the object returned from the <tt>attemptAuthentication</tt>
+     * method.
      */
     @Override
     protected void successfulAuthentication(HttpServletRequest request,

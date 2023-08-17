@@ -86,8 +86,9 @@ public class UserController {
 
     /*
      * user 회원 전체 조회
+     * ✅ /users/usersinfo
      */
-    @GetMapping
+    @GetMapping()
     public ResponseEntity getUsers() {
 
         // ⏹️ Pagination 적용 전
