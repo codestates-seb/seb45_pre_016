@@ -29,7 +29,6 @@ public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper mapper;
 
-
     /**
      * user 등록
      * @param questionPostDto
