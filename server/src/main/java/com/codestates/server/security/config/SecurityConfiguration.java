@@ -80,7 +80,7 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));    // 모든 출처에 대한 통신 허용
+//        configuration.setAllowedOrigins(Arrays.asList("*"));    // 모든 출처에 대한 통신 허용
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));   // 지정한 HTTPMethod에 대한 통신 허용
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

@@ -20,11 +20,11 @@ public class SecurityCorsConfig {
         CorsConfiguration config = new CorsConfiguration();
         // 요청에서 자격증명(쿠키, 인증 헤더 등) 을 허용
         config.setAllowCredentials(true);
-        config.addAllowedOriginPattern("http://43.201.157.40:3030");
-
+//        config.addAllowedOriginPattern("http://43.201.157.40:3030");
+        config.addAllowedOriginPattern("*");
         // 응답헤더에 Authorization 헤더를 노출하도록 설정
         config.addExposedHeader("Authorization");
-
+        config.addAllowedHeader("Content-Type");   // content-type허용
         config.addAllowedHeader("*");   // 모든 헤더 허용
         config.addAllowedMethod("GET"); // 특정 메서드만 허용
         config.addAllowedMethod("POST"); // 특정 메서드만 허용
