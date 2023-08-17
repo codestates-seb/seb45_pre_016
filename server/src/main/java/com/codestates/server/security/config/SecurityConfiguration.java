@@ -43,6 +43,8 @@ public class SecurityConfiguration {
                 .and()
                 .csrf().disable()
                 .cors(withDefaults())   // SecurityConfiguration Bean 이용
+                .cors(configuration -> configuration
+                        .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 생성하지 않도록 설정
                 .and()
                 .formLogin().disable()
@@ -63,7 +65,7 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.PATCH, "/quesitons/**").hasAnyRole("USER", "ADMIN")
                         .antMatchers(HttpMethod.GET, "/question/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/guestions/**").permitAll()   // 질문 조회 -> 전체 접근 가능
-                        .antMatchers(HttpMethod.DELETE, "/questions/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers(HttpMethod.DELETE, "/questions/delete/**").hasAnyRole("USER", "ADMIN")
 
                 );
         return http.build();
