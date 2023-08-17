@@ -83,7 +83,7 @@ public class QuestionController {
      *   title : 제목,
      *   modifiedAt : 날짜,
      *   {tag , tag , tag , tag , tag}
-     *   }
+     *   } -> 에러 떠서 고쳐야함...!
      //ResponseEntity<List<QuestionResponseDto>> <- 이걸로 바꿔야함
      */
     @GetMapping
