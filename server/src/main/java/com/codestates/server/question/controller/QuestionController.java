@@ -29,7 +29,6 @@ public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper mapper;
 
-
     /**
      * user 등록
      * @param questionPostDto
@@ -94,7 +93,7 @@ public class QuestionController {
      * @param questionId
      * @return
      */
-    @DeleteMapping("/{question-id}")
+    @DeleteMapping("/delete/{question-id}")
     public ResponseEntity deleteQuestion(@PathVariable("question-id") Long questionId){
 
         questionService.deleteQuestion(questionId);
