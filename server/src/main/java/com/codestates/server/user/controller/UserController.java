@@ -32,7 +32,7 @@ public class UserController {
     private final UserService userService;
     private final UserMapper mapper;
 
-    /*
+    /**
     * user 회원가입
     * @param userPostDto
     * ✅ return 부분 URI로 수정하였습니다. 하지만 post에만 적용해야할 사항인 듯 합니다!
@@ -53,11 +53,10 @@ public class UserController {
         return ResponseEntity.created(location).build();
     }
 
-    /*
+    /**
      * user 회원 정보수정
      * @param userPatchDto
-     * ✅ Patch는 Uri로 받으면 안 될 것 같아요..!
-     * patch 기능은 수정을 위해서 사용되는 거라서요 : )
+     * ✅ Patch는 수정 기능이라 response로 Response했습니다!
      */
     @PatchMapping("/mypage/edit/{user-id}")
     public ResponseEntity patchUser(@PathVariable("user-id") @Positive long userId,
@@ -71,7 +70,7 @@ public class UserController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    /*
+    /**
      * user 회원 마이페이지
      * @param userId
      * ✅ 마찬가지 이유로 ResponseEntity response 그대로
@@ -87,6 +86,7 @@ public class UserController {
 
     /*
      * user 회원 전체 조회
+     * ✅ /users/usersinfo
      */
     @GetMapping
     public ResponseEntity getUsers() {
@@ -113,7 +113,7 @@ public class UserController {
 //    }
 
 
-    @DeleteMapping("/delete/{user-id}")
+    @DeleteMapping("/{user-id}")
     public ResponseEntity deleteUser(@PathVariable("user-id") @Positive long userId) {
 
         userService.deleteUser(userId);

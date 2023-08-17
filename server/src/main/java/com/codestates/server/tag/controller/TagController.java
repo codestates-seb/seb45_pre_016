@@ -46,13 +46,14 @@ public class TagController {
      * Pagination 구현한 getTags
      */
 //    @GetMapping
-//    public ResponseEntity getUsers(@Positive @RequestParam int page,
+//    public ResponseEntity getTags(@Positive @RequestParam int page,
 //                                   @Positive @RequestParam int size) {
 //
 //        Page<Tag> tagPages = tagService.getTags(page -1, size);
 //        List<Tag> tags = tagPages.getContent();
 //
 //        return  new ResponseEntity(
+//                new MultiResponseDto<>(mapper.tagsToTagResponseDto(tags), tagPages), HttpStatus.OK);
 //                new MultiResponseDto<>(mapper.tagsToTagResponseDto(tags), userPages), HttpStatus.OK);
 //    }
 

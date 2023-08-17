@@ -1,5 +1,8 @@
 package com.codestates.server.user.entity;
 
+import com.codestates.server.answer.entity.Answer;
+import com.codestates.server.question.entity.Question;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +11,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
     요구사항 :
@@ -44,10 +49,36 @@ public class User {
     @CreatedDate
     private LocalDateTime created_at;
 
-    // ⏹️ 추후 추가 예정 (매핑 필요)
-    // private List<Question> questionList = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Question> questions = new ArrayList<>();
 
-    // ⏹️ 추후 추가 예정 (매핑 필요)
-    // private List<Answer> answerList = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Answer> answers = new ArrayList<>();
+
+    /**
+     * ElementCollection 을 사용하면 테이블을 생성하지 않고 컬렉션 관리가 가능
+     *
+     * 회원이 가지는 역할을 나타내느 정보를 담고 있는 문자열 리스트
+     * FetchType.EAGER : 옵션을 사용해서 즉시 로딩되도록 설정
+     * FetchType.LAZY : 지연 로딩
+     */
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
+    public void setQuestion(Question question) {
+        questions.add(question);
+        if (question.getUser() != this) {
+            question.setUser(this);
+        }
+    }
+
+    public void setAnswer(Answer answer) {
+        answers.add(answer);
+        if(answer.getUser() != this) {
+            answer.setUser(this);
+        }
+    }
 
 }
