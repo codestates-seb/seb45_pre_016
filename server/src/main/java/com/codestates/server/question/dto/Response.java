@@ -13,12 +13,13 @@ import org.springframework.http.ResponseEntity;
  */
 @Getter
 @Setter
-public class Response<T> extends ResponseEntity<T> {
+public class Response<T> {
 
     private Long userId;
     private T data;
 
-    public Response(T body, HttpStatus status) {
-        super(body, status);
+    public Response(Long userId, T data) {
+        this.userId = userId;
+        this.data = data;
     }
 }

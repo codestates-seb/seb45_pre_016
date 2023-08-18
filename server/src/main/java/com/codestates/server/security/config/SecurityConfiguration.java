@@ -73,6 +73,7 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.PATCH, "/questions/**/answer/**").hasAnyRole("USER","ADMIN")
                         .antMatchers(HttpMethod.DELETE, "/questions/**/answer/**").hasAnyRole("USER","ADMIN")
                 );
+
         return http.build();
     }
 
@@ -111,7 +112,7 @@ public class SecurityConfiguration {
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
 
             builder
-                    .addFilter(corsConfig.corsFilter())
+//                    .addFilter(corsConfig.corsFilter())
                     .addFilter(jwtAuthenticationFilter) // Spring Security Filter Chain에 추가
                     .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);  // JwtAuthenticationFilter 뒤에 jwtVerificationFilter 보내겠다
         }

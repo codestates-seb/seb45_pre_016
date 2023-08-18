@@ -1,5 +1,6 @@
 package com.codestates.server.question.entity;
 
+import com.codestates.server.answer.entity.Answer;
 import com.codestates.server.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,10 @@ public class Question {
 
     @Column(name = "question_views", nullable = true)
     private Long views;
+
+    @JsonIgnore //순환참조 발생하여 stackoverflow 에러남 > JsonIgnore 사용해서 없애준다
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    private List<Answer> answers = new ArrayList<>();
 
     @JsonIgnore //순환참조 발생하여 stackoverflow 에러남 > JsonIgnore 사용해서 없애준다
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
