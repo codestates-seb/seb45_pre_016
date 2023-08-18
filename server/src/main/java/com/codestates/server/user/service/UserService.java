@@ -87,7 +87,7 @@ public class UserService {
             Answer userAnswer = new Answer();
             userAnswer.setAnswerId(answer.getAnswerId());
             userAnswer.setContent(answer.getContent());
-            userAnswer.setCreatedAt(answer.getCreatedAt());
+            userAnswer.setCreated_At(answer.getCreated_At());
             userAnswerList.add(userAnswer);
         }
 
