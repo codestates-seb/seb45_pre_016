@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class UserQuestionInfo {
     private Long questionId;
     private String title;
-    private String content;
-    private LocalDateTime created_at;
+//    private String content;
+    private LocalDateTime created_At;
 
 }
