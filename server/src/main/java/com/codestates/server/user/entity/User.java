@@ -53,6 +53,24 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Question> questions = new ArrayList<>();
 
+    // questionInfo에서 가지고 올 data
+    public List<UserQuestionInfo> getUserQuestionInfo() {
+        List<UserQuestionInfo> userQuestionInfos = new ArrayList<>();
+
+        for(Question question : questions) {
+            UserQuestionInfo userQuestionInfo = new UserQuestionInfo();
+
+            userQuestionInfo.setQuestionId(question.getQuestionId());
+            userQuestionInfo.setTitle(question.getTitle());
+            userQuestionInfo.setContent(question.getContent());
+            userQuestionInfo.setCreated_at(question.getCreated_At());
+
+            userQuestionInfos.add(userQuestionInfo);
+        }
+        return userQuestionInfos;
+    }
+
+
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Answer> answers = new ArrayList<>();

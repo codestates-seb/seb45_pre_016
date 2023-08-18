@@ -1,5 +1,6 @@
 package com.codestates.server.user.dto;
 
+import com.codestates.server.user.entity.UserQuestionInfo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +16,8 @@ public class UserResponseDto {
     private String image = "https://picsum.photos/200";
 
 //    ⏹️ 리스트 변경 및 매핑 예정
-//    private List<UserQuestion> userQuestions;
+    private List<UserQuestionInfo> questions;
+
 
 //    ⏹️ 리스트 변경 및 매핑 예정
 //    private List<UserAnswer> userAnswers;
