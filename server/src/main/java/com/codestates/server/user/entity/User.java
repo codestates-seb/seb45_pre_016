@@ -53,7 +53,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Question> questions = new ArrayList<>();
 
-    // questionInfo에서 가지고 올 data
+//     questionInfo에서 가지고 올 data
     public List<UserQuestionInfo> getUserQuestionInfo() {
         List<UserQuestionInfo> userQuestionInfos = new ArrayList<>();
 
@@ -62,8 +62,8 @@ public class User {
 
             userQuestionInfo.setQuestionId(question.getQuestionId());
             userQuestionInfo.setTitle(question.getTitle());
-            userQuestionInfo.setContent(question.getContent());
-            userQuestionInfo.setCreated_at(question.getCreated_At());
+//            userQuestionInfo.setContent(question.getContent());
+            userQuestionInfo.setCreated_At(question.getCreated_At());
 
             userQuestionInfos.add(userQuestionInfo);
         }
@@ -74,6 +74,21 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Answer> answers = new ArrayList<>();
+
+    public List<UserAnswerInfo> getUserAnswerInfo() {
+        List<UserAnswerInfo> userAnswerInfos = new ArrayList<>();
+
+        for(Answer answer : answers) {
+            UserAnswerInfo userAnswerInfo = new UserAnswerInfo();
+
+            userAnswerInfo.setAnswerId(answer.getAnswerId());
+            userAnswerInfo.setContent(answer.getContent());
+            userAnswerInfo.setCreatedAt(answer.getCreatedAt());
+
+            userAnswerInfos.add(userAnswerInfo);
+        }
+        return userAnswerInfos;
+    }
 
     /**
      * ElementCollection 을 사용하면 테이블을 생성하지 않고 컬렉션 관리가 가능

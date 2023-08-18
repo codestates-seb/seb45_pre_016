@@ -11,4 +11,7 @@ import java.util.List;
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
     @Query(value = "SELECT * FROM answer WHERE question_id = :questionId", nativeQuery = true)
     List<Answer> findByQuestionId(long questionId);
+
+    @Query(value = "SELECT * FROM answer WHERE user_id = :userId", nativeQuery = true)
+    List<Answer> findAllByUserId(long userId);
 }

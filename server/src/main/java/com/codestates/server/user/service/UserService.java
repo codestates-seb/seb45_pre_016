@@ -1,5 +1,7 @@
 package com.codestates.server.user.service;
 
+import com.codestates.server.answer.entity.Answer;
+import com.codestates.server.answer.repository.AnswerRepository;
 import com.codestates.server.question.entity.Question;
 import com.codestates.server.question.repository.QuestionRepository;
 import com.codestates.server.security.auth.utils.CustomAuthorityUtils;
@@ -23,15 +25,14 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-
     // 내부에서 발생하는 사건을 다른 곳에 알릴 수 있음
     private final ApplicationEventPublisher publisher;
 
     private final PasswordEncoder passwordEncoder;
-
     private final CustomAuthorityUtils authorityUtils;
 
     private final QuestionRepository questionRepository;
+    private final AnswerRepository answerRepository;
 
     // 회원 가입에 대한 메서드
     public User createUser(User user) {
@@ -68,18 +69,30 @@ public class UserService {
         User user = getVerifiedUser(userId);
 
         List<Question> questions = getUserQuestionByUserId(userId);
-        List<Question> simplifiedQuestions = new ArrayList<>();
+        List<Question> userQuestionList = new ArrayList<>();
 
         for (Question question : questions) {
-            Question simplifiedQuestion = new Question();
-            simplifiedQuestion.setQuestionId(question.getQuestionId());
-            simplifiedQuestion.setTitle(question.getTitle());
-            simplifiedQuestion.setContent(question.getContent());
-            simplifiedQuestion.setCreated_At(question.getCreated_At());
-            simplifiedQuestions.add(simplifiedQuestion);
+            Question userQuestion = new Question();
+            userQuestion.setQuestionId(question.getQuestionId());
+            userQuestion.setTitle(question.getTitle());
+//            userQuestion.setContent(question.getContent());
+            userQuestion.setCreated_At(question.getCreated_At());
+            userQuestionList.add(userQuestion);
         }
 
-        user.setQuestions(simplifiedQuestions);
+        List<Answer> answers = getUserAnswerByUserId(userId);
+        List<Answer> userAnswerList = new ArrayList<>();
+
+        for(Answer answer : answers) {
+            Answer userAnswer = new Answer();
+            userAnswer.setAnswerId(answer.getAnswerId());
+            userAnswer.setContent(answer.getContent());
+            userAnswer.setCreatedAt(answer.getCreatedAt());
+            userAnswerList.add(userAnswer);
+        }
+
+        user.setQuestions(userQuestionList);
+        user.setAnswers(userAnswerList);
 
         return user;
     }
@@ -88,6 +101,9 @@ public class UserService {
         return questionRepository.findAllByUserId(userId);
     }
 
+    private List<Answer> getUserAnswerByUserId(long userId) {
+        return answerRepository.findAllByUserId(userId);
+    }
 
     public List<User> getUsers() {
         // ⏹️ pagination 변경 예정
