@@ -29,7 +29,7 @@ public class JwtTokenizer {
 
     @Getter
     @Value("${jwt.refresh-token-expiration-minutes}")
-    private int refreshTokenExirationMinutes;   // Refresh Token 에 대한 만료 시간 정보
+    private int refreshTokenExpirationMinutes;   // Refresh Token 에 대한 만료 시간 정보
 
     /*
      * Plain Text 형태의 SecretKey -> Base64 형식 문자열로 인코딩
@@ -38,25 +38,25 @@ public class JwtTokenizer {
     public String encodeBase64SecretKey(String secretKey) {
 
         return Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
-    
+
     }
 
     /**
      *
      * 인증된 사용자에게 JWT 최초 발급
      * JWT 생성 메서드
-     *  @param claim : (인증된) 사용자 정보
+     *  @param claims : (인증된) 사용자 정보
      *  @param subject : 제목 추가
      * issuedAt : 발행일자 설정
      *  @param expiration : 만려 일시
      * signwith : 서명을 위한 Key 객체 설정
      * compact : JWT 생성 및 직렬화
-    */
+     */
     public String generateAccessToken(Map<String, Object> claims,
                                       String subject,
                                       Date expiration,
                                       String base64EncodedSecretKey) {
-        
+
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
         return Jwts.builder()
@@ -99,10 +99,10 @@ public class JwtTokenizer {
     }
 
     /*
-      * 위조 및 변조 여부 확인
-      * Secret Key 로 Signature 검증
-      * -> 성공하면 JWT 파싱 후 Claims 얻을 수 있음 (parseClaimsJws()메서드)
-      * 리턴할 필요는 X
+     * 위조 및 변조 여부 확인
+     * Secret Key 로 Signature 검증
+     * -> 성공하면 JWT 파싱 후 Claims 얻을 수 있음 (parseClaimsJws()메서드)
+     * 리턴할 필요는 X
      */
     public void verifySignature(String jws, String base64EncodedSecretKey) {
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
