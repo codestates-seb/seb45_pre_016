@@ -9,16 +9,13 @@ import org.mapstruct.Mapping;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Service
 @Mapper(componentModel = "spring")
 public interface AnswerMapper {
     Answer answerPatchDtoToAnswer(AnswerPatchDto answerPatchDto);
 
     Answer answerPostDtoToAnswer(AnswerPostDto answerPostDto);
 
-    @Mapping(source = "user.userId", target = "userId")
-    @Mapping(source = "question.questionId", target = "questionId")
-    @Mapping(source = "user.name", target = "name")
+    AnswerResponseDto answerToAnswerResponseDto(Answer answer);
 
-    List<AnswerResponseDto> answerListToAnswerResponseDto(List<Answer> answer);
+    List<AnswerResponseDto> answersListToAnswerResponseDto(List<Answer> answer);
 }

@@ -16,9 +16,12 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class Answer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "answer_id")
     private Long answerId;
+
     @Column(length = 10000, nullable = false)
     private String content;
 
@@ -27,16 +30,16 @@ public class Answer {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @LastModifiedDate
-    @Column(name = "LAST_MODIFIED_AT")
+    @Column(name = "modified_at")
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "QUESTION_ID")
+    @ManyToOne
+    @JoinColumn(name = "question")
     private Question question;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBER_ID")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Answer(Question question, String content, User user) {
