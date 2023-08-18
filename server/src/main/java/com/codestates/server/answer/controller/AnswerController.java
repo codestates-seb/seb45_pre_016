@@ -7,9 +7,14 @@ import com.codestates.server.answer.dto.AnswerResponseDto;
 import com.codestates.server.answer.entity.Answer;
 import com.codestates.server.answer.mapper.AnswerMapper;
 import com.codestates.server.answer.service.AnswerService;
+import com.codestates.server.question.entity.Question;
+import com.codestates.server.question.service.QuestionService;
 import com.codestates.server.question.uri.UriCreator;
+import com.codestates.server.user.entity.User;
+import com.codestates.server.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,22 +26,27 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/questions/{question-id}")
+@RequestMapping("/questions/{question-id}/answers")
 @RequiredArgsConstructor
+@Slf4j
 public class AnswerController {
     private final AnswerService answerService;
+
     private final AnswerMapper mapper;
 
     @PostMapping
-    public ResponseEntity<AnswerResponseDto> createAnswer(
+    public ResponseEntity createAnswer(
             @RequestBody @Valid AnswerPostDto answerPostDto,
-            @PathVariable("question-id") @Positive long questionId) {
-        Answer createdAnswer = answerService.createAnswer(
-                mapper.answerPostDtoToAnswer(answerPostDto), questionId);
-        URI location = UriCreator.createUri("/questions/{question-id}", questionId);
-        AnswerResponseDto response = mapper.answerToAnswerResponseDto(createdAnswer);
+            @PathVariable("question-id") Long questionId) {
 
-        return ResponseEntity.created(location).body(response);
+        log.info(" questionId = {}", questionId);
+
+        Answer createdAnswer = answerService.createAnswer(
+                mapper.answerPostDtoToAnswer(answerPostDto), questionId, answerPostDto.getUserId());
+
+        URI location = UriCreator.createUri("/questions/"+questionId, createdAnswer.getAnswerId());
+
+        return ResponseEntity.created(location).build();
     }
 
     @PatchMapping("/{answer-id}")

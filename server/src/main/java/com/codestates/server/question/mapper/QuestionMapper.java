@@ -1,5 +1,7 @@
 package com.codestates.server.question.mapper;
 
+import com.codestates.server.answer.dto.AnswerResponseDto;
+import com.codestates.server.answer.entity.Answer;
 import com.codestates.server.question.dto.QuestionPatchDto;
 import com.codestates.server.question.dto.QuestionPostDto;
 import com.codestates.server.question.dto.QuestionResponseDto;
@@ -50,7 +52,7 @@ public interface QuestionMapper {
 
     Question questionPatchDtoToQuestion(QuestionPatchDto questionPatchDto);
 
-    default QuestionResponseDto questionToQuestionResponseDto(Question question, List<Tag> tags){
+    default QuestionResponseDto questionToQuestionResponseDto(Question question, List<Tag> tags, List<AnswerResponseDto> answers){
         if ( question == null ) {
             return null;
         }
@@ -64,6 +66,7 @@ public interface QuestionMapper {
         questionResponseDto.setModified_At( question.getModified_At() );
 
         questionResponseDto.setTags(tags);
+        questionResponseDto.setAnswers(answers);
 
         return questionResponseDto;
     };

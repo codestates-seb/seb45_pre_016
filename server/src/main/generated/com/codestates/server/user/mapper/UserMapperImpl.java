@@ -1,6 +1,6 @@
 package com.codestates.server.user.mapper;
 
-import com.codestates.server.user.dto.UserLoginDto;
+import com.codestates.server.security.auth.dto.UserLoginDto;
 import com.codestates.server.user.dto.UserPatchDto;
 import com.codestates.server.user.dto.UserPostDto;
 import com.codestates.server.user.dto.UserResponseDto;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-16T13:16:53+0900",
+    date = "2023-08-18T20:10:36+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.18 (Azul Systems, Inc.)"
 )
 @Component
@@ -55,7 +55,6 @@ public class UserMapperImpl implements UserMapper {
 
         UserLoginDto userLoginDto = new UserLoginDto();
 
-        userLoginDto.setUserId( user.getUserId() );
         userLoginDto.setEmail( user.getEmail() );
         userLoginDto.setPassword( user.getPassword() );
 

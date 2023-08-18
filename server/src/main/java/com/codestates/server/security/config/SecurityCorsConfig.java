@@ -26,8 +26,8 @@ public class SecurityCorsConfig {
         config.addAllowedOriginPattern("http://43.201.157.40:3000");
 
         // 응답헤더에 Authorization 헤더를 노출하도록 설정
-        config.addExposedHeader("Authorization");
-        config.addAllowedHeader("Content-Type");   // content-type허용
+        config.addExposedHeader("authorization");
+        config.addAllowedHeader("content-Type");   // content-type허용
         config.addAllowedHeader("*");   // 모든 헤더 허용
         config.addAllowedMethod("GET"); // 특정 메서드만 허용
         config.addAllowedMethod("POST"); // 특정 메서드만 허용
