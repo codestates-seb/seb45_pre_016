@@ -13,9 +13,28 @@ import java.util.List;
 public interface AnswerMapper {
     Answer answerPatchDtoToAnswer(AnswerPatchDto answerPatchDto);
 
-    Answer answerPostDtoToAnswer(AnswerPostDto answerPostDto);
+    default Answer answerPostDtoToAnswer(AnswerPostDto answerPostDto){
+        if (answerPostDto == null) {
+            return null;
+        } else {
+            Answer answer = new Answer();
+            answer.setContent(answerPostDto.getContent());
+            return answer;
+        }
+    }
 
-    AnswerResponseDto answerToAnswerResponseDto(Answer answer);
+    default AnswerResponseDto answerToAnswerResponseDto(Answer answer){
+        if (answer == null) {
+            return null;
+        } else {
+            AnswerResponseDto answerResponseDto = new AnswerResponseDto();
+            answerResponseDto.setUserId(answer.getUser().getUserId());
+            answerResponseDto.setAnswerId(answer.getAnswerId());
+            answerResponseDto.setContent(answer.getContent());
+            answerResponseDto.setModified_At(answer.getModified_At());
+            return answerResponseDto;
+        }
+    }
 
     List<AnswerResponseDto> answersListToAnswerResponseDto(List<Answer> answer);
 }

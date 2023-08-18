@@ -1,6 +1,8 @@
 package com.codestates.server.question.dto;
 
 
+import com.codestates.server.answer.dto.AnswerResponseDto;
+import com.codestates.server.answer.entity.Answer;
 import com.codestates.server.question.entity.QuestionTag;
 import com.codestates.server.tag.entity.Tag;
 import lombok.Getter;
@@ -21,11 +23,9 @@ public class QuestionResponseDto {
 
     private String content;
 
-    private Long views;
+    private List<AnswerResponseDto> answers;
 
-    /**
-     * tag 완성되면 questiontags -> tag로 교체. (이부분 구현되야함)
-     */
+    private Long views;
 
     private List<Tag> tags;
 

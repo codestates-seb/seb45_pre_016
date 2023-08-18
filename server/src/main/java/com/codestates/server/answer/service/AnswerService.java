@@ -1,11 +1,13 @@
 package com.codestates.server.answer.service;
 
+import com.codestates.server.answer.dto.AnswerResponseDto;
 import com.codestates.server.answer.entity.Answer;
 import com.codestates.server.answer.repository.AnswerRepository;
 import com.codestates.server.question.entity.Question;
 import com.codestates.server.question.service.QuestionService;
 import com.codestates.server.user.entity.User;
 import com.codestates.server.user.repository.UserRepository;
+import com.codestates.server.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,17 +22,22 @@ public class AnswerService {
 
     private final AnswerRepository answerRepository;
     private final QuestionService questionService;
+    private final UserService userService;
 
-    public AnswerService(AnswerRepository answerRepository, QuestionService questionService) {
+    public AnswerService(AnswerRepository answerRepository, QuestionService questionService, UserService userService) {
         this.answerRepository = answerRepository;
         this.questionService = questionService;
+        this.userService = userService;
     }
 
-    public Answer createAnswer(Answer answer, Long questionId) {
+    public Answer createAnswer(Answer answer, Long questionId, Long userId) {
         Question question = questionService.findQuestion(questionId);
-        answer.setQuestion(question);
-        answerRepository.save(answer);
+        User user = userService.getUser(userId);
 
+        answer.setQuestion(question);
+        answer.setUser(user);
+
+        answerRepository.save(answer);
         return answer;
     }
 
@@ -47,9 +54,9 @@ public class AnswerService {
         throw new EntityNotFoundException("답변이 검색되지 않습니다.");
     }
 
-//    public List<Answer> getAnswers(long questionId) {
-//        return answerRepository.findByQuestionId(questionId);
-//    }
+    public List<Answer> findByQuestionId(long questionId) {
+        return answerRepository.findByQuestionId(questionId);
+    }
 
     public void deleteAnswer(long questionId, long answerId) {
         Answer existingAnswer = findAnswerById(answerId);

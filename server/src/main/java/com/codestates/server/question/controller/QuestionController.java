@@ -1,10 +1,14 @@
 package com.codestates.server.question.controller;
 
+import com.codestates.server.answer.dto.AnswerResponseDto;
+import com.codestates.server.answer.entity.Answer;
+import com.codestates.server.answer.mapper.AnswerMapper;
+import com.codestates.server.answer.service.AnswerService;
 import com.codestates.server.question.dto.QuestionPatchDto;
 import com.codestates.server.question.dto.QuestionPostDto;
 import com.codestates.server.question.dto.QuestionResponseDto;
+import com.codestates.server.question.dto.Response;
 import com.codestates.server.question.entity.Question;
-import com.codestates.server.question.entity.QuestionTag;
 import com.codestates.server.question.mapper.QuestionMapper;
 import com.codestates.server.question.service.QuestionService;
 import com.codestates.server.question.uri.UriCreator;
@@ -16,11 +20,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @Slf4j
@@ -31,6 +35,8 @@ public class QuestionController {
     private final QuestionService questionService;
     private final TagService tagService;
     private final QuestionMapper mapper;
+    private final AnswerService answerService;
+    private final AnswerMapper answerMapper;
 
     /**
      * user 등록
@@ -72,7 +78,11 @@ public class QuestionController {
     public ResponseEntity<QuestionResponseDto> getQuestion(@PathVariable("question-id") Long questionsId){
         Question question = questionService.findQuestion(questionsId);
         List<Tag> tags = tagService.getTags(questionsId);
-        QuestionResponseDto questionResponseDto = mapper.questionToQuestionResponseDto(question,tags);
+        List<Answer> answers = answerService.findByQuestionId(questionsId);
+
+        List<AnswerResponseDto> answersList = answers.stream().map(answerMapper::answerToAnswerResponseDto).collect(Collectors.toList());
+
+        QuestionResponseDto questionResponseDto = mapper.questionToQuestionResponseDto(question,tags,answersList);
         return new ResponseEntity<>(questionResponseDto,HttpStatus.OK);
     }
 
@@ -86,14 +96,22 @@ public class QuestionController {
      //ResponseEntity<List<QuestionResponseDto>> <- 이걸로 바꿔야함
      */
     @GetMapping
-    public String getQuestions(){
+    public ResponseEntity<List<Response>> getQuestions(){
 
         List<Question> allQuestions = questionService.findAllQuestions();
+        List<Response> allResponse = new ArrayList<>();
+        for(Question question : allQuestions){
+            Long questionId = question.getQuestionId();
+            List<Tag> tags = tagService.getTags(questionId);
+            List<Answer> answers = answerService.findByQuestionId(questionId);
+            List<AnswerResponseDto> answersList = answers.stream().map(answerMapper::answerToAnswerResponseDto).collect(Collectors.toList());
+            QuestionResponseDto questionResponseDto = mapper.questionToQuestionResponseDto(question,tags,answersList);
+            Response<QuestionResponseDto> response = new Response<>(question.getUser().getUserId(), questionResponseDto);
+            allResponse.add(response);
+        }
+//        List<Response> questionResponseDtoList = allQuestions.stream().map(q->mapper.questionToQuestionResponseDto(q,)).collect(Collectors.toList());
 
-
-//        List<QuestionResponseDto> questionResponseDtoList = allQuestions.stream().map(q->mapper.questionToQuestionResponseDto(q,)).collect(Collectors.toList());
-//        return new ResponseEntity<>(questionResponseDtoList, HttpStatus.OK);
-        return "ho";
+        return new ResponseEntity<>(allResponse, HttpStatus.OK);
     }
 
     /**
