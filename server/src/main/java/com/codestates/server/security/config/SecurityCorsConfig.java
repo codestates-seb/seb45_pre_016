@@ -20,7 +20,7 @@ public class SecurityCorsConfig {
         CorsConfiguration config = new CorsConfiguration();
         // 요청에서 자격증명(쿠키, 인증 헤더 등) 을 허용
         config.setAllowCredentials(true);
-        config.addAllowedOriginPattern("http://43.201.157.40:3030");
+        config.addAllowedOriginPattern("*");
 
         // 응답헤더에 Authorization 헤더를 노출하도록 설정
         config.addExposedHeader("Authorization");
