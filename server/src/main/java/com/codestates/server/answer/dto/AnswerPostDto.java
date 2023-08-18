@@ -1,5 +1,7 @@
 package com.codestates.server.answer.dto;
 
+import com.codestates.server.question.entity.Question;
+import com.codestates.server.user.entity.User;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,16 +14,13 @@ import javax.validation.constraints.Positive;
 @Setter
 @NoArgsConstructor
 public class AnswerPostDto {
-    @NotNull
+
     @Positive
-    private Long questionId;
-    @NotNull
     private Long userId;
     @NotBlank(message = "답변 내용을 적어주세요")
     private String content;
 
-    public AnswerPostDto(Long questionId, Long userId, String content) {
-        this.questionId = questionId;
+    public AnswerPostDto(Long userId, String content) {
         this.userId = userId;
         this.content = content;
     }

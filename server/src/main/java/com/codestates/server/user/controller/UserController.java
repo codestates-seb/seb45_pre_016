@@ -27,6 +27,7 @@ import java.util.List;
 @Validated
 @AllArgsConstructor
 @Slf4j
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
     private final UserService userService;

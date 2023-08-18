@@ -22,7 +22,7 @@ public class QuestionTag {
     private Question question;
 
 
-//    @ManyToOne
-//    @JoinColumn(name = "tag_id")
-//    private Tag tag;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
 }
