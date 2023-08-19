@@ -50,31 +50,22 @@ public class AnswerController {
     }
 
     @PatchMapping("/{answer-id}")
-    public ResponseEntity<AnswerResponseDto> updateAnswer(
-            @PathVariable("answer-id") @Positive long answerId,
-            @PathVariable("question-id") @Positive long questionId,
+    public ResponseEntity updateAnswer(
+            @PathVariable("answer-id") @Positive Long answerId,
+            @PathVariable("question-id") @Positive Long questionId,
             @RequestBody @Valid AnswerPatchDto answerPatchDto) {
         answerPatchDto.setAnswerId(answerId);
         Answer updatedAnswer = answerService.updateAnswer(
                 mapper.answerPatchDtoToAnswer(answerPatchDto), questionId);
-        AnswerResponseDto response = mapper.answerToAnswerResponseDto(updatedAnswer);
 
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<AnswerResponseDto>> getAnswers(
-//            @PathVariable("question-id") @Positive long questionId) {
-//        List<Answer> answers = answerService.getAnswers(questionId);
-//        List<AnswerResponseDto> response = mapper.answersListToAnswerResponseDto(answers);
-//
-//        return ResponseEntity.ok(response);
-//    }
 
     @DeleteMapping("/{answer-id}")
-    public ResponseEntity<Void> deleteAnswer(
-            @PathVariable("answer-id") @Positive long answerId,
-            @PathVariable("question-id") @Positive long questionId) {
+    public ResponseEntity deleteAnswer(
+            @PathVariable("answer-id") @Positive Long answerId,
+            @PathVariable("question-id") @Positive Long questionId) {
         answerService.deleteAnswer(questionId, answerId);
 
         return ResponseEntity.noContent().build();
