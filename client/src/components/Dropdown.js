@@ -8,7 +8,7 @@ import "react-dropdown/style.css";
 import down from "../utils/downarrow.png";
 import up from "../utils/uparrow.png";
 
-export const ReviewDropdown = () => {
+const ReviewDropdown = () => {
   const options = ["관련 리뷰 내용 로딩"];
   const [isClicked, setIsClicked] = useState(true);
   const [isChosen, setIsChosen] = useState();
@@ -65,3 +65,5 @@ export const ReviewDropdown = () => {
     </div>
   );
 };
+
+export default ReviewDropdown;
