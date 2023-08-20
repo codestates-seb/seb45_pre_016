@@ -25,9 +25,8 @@ public class QuestionService {
     }
 
     public Question createQuestion(Question question){
+
         question.setViews(0L);
-
-
         return questionRepository.save(question);
     }
 
@@ -35,12 +34,18 @@ public class QuestionService {
         Optional<Question> optionalQuestion = questionRepository.findById(question.getQuestionId());
 
         Question findedQuestion = optionalQuestion.orElseThrow();
-        //요부분 수정할 예정
-        findedQuestion.setTitle(question.getTitle());
-        findedQuestion.setContent(question.getContent());
 
-        BeanUtils.copyProperties(findedQuestion,question,"question_id");
-        return questionRepository.save(question);
+        Long reqUserId = question.getUser().getUserId();
+        Long savedUserId = findedQuestion.getUser().getUserId();
+
+        if(reqUserId == savedUserId){
+            findedQuestion.setTitle(question.getTitle());
+            findedQuestion.setContent(question.getContent());
+            BeanUtils.copyProperties(findedQuestion,question,"question_id");
+            return questionRepository.save(question);
+        }else {
+            throw new RuntimeException("유저가 다릅니다.");
+        }
     }
 
     public Question findQuestion(Long questionsId) {
