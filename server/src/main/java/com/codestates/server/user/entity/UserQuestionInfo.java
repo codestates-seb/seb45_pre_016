@@ -9,8 +9,11 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class UserQuestionInfo {
+
     private Long questionId;
+
     private String title;
+
 //    private String content;
     private LocalDateTime created_At;
 

@@ -33,7 +33,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private long userId;    // Long으로 쓸 지? long으로 쓸 지?
+    private Long userId;    // Long으로 쓸 지? long으로 쓸 지?
 
     @Column(name = "user_name", nullable = false, unique = true)
     private String userName;

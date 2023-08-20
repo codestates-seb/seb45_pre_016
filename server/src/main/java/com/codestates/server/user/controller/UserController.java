@@ -60,7 +60,7 @@ public class UserController {
      * ✅ Patch는 수정 기능이라 response로 Response했습니다!
      */
     @PatchMapping("/mypage/edit/{user-id}")
-    public ResponseEntity patchUser(@PathVariable("user-id") @Positive long userId,
+    public ResponseEntity patchUser(@PathVariable("user-id") @Positive Long userId,
                                     @Valid @RequestBody UserPatchDto userPatchDto) {
 
         userPatchDto.setUserId(userId);
@@ -77,7 +77,7 @@ public class UserController {
      * ✅ 마찬가지 이유로 ResponseEntity response 그대로
      */
     @GetMapping("/mypage/{user-id}")
-    public ResponseEntity getUser(@PathVariable("user-id") @Positive long userId) {
+    public ResponseEntity getUser(@PathVariable("user-id") @Positive Long userId) {
 
         User user = userService.getUser(userId);
         UserResponseDto response = mapper.userToUserResponseDto(user);
@@ -115,7 +115,7 @@ public class UserController {
 
 
     @DeleteMapping("/{user-id}")
-    public ResponseEntity deleteUser(@PathVariable("user-id") @Positive long userId) {
+    public ResponseEntity deleteUser(@PathVariable("user-id") @Positive Long userId) {
 
         userService.deleteUser(userId);
 

@@ -65,7 +65,7 @@ public class UserService {
     }
 
     // user 사용자 정보 가지고 오기
-    public User getUser(long userId) {
+    public User getUser(Long userId) {
         User user = getVerifiedUser(userId);
 
         List<Question> questions = getUserQuestionByUserId(userId);
@@ -97,11 +97,11 @@ public class UserService {
         return user;
     }
 
-    private List<Question> getUserQuestionByUserId(long userId) {
+    private List<Question> getUserQuestionByUserId(Long userId) {
         return questionRepository.findAllByUserId(userId);
     }
 
-    private List<Answer> getUserAnswerByUserId(long userId) {
+    private List<Answer> getUserAnswerByUserId(Long userId) {
         return answerRepository.findAllByUserId(userId);
     }
 
@@ -123,7 +123,7 @@ public class UserService {
 //
 //    }
 
-    public void deleteUser(long userId) {
+    public void deleteUser(Long userId) {
         User getUser = getVerifiedUser(userId);
 
         userRepository.delete(getUser);
@@ -131,7 +131,7 @@ public class UserService {
 
     // 있는 user인지 확인하기 -> 없으면 예외 던지기("없는 회원 입니다.")
     // 🔔 Question & Comment 쓸 때 로그인 안 되어 있으면 해당 메서드 사용 해야 함
-    private User getVerifiedUser(long userId) {
+    private User getVerifiedUser(Long userId) {
 
         Optional<User> user = userRepository.findById(userId);
 

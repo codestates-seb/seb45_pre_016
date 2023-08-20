@@ -10,7 +10,9 @@ import java.time.LocalDateTime;
 public class UserAnswerInfo {
 
     private Long answerId;
+
     private String content;
+
     private LocalDateTime createdAt;
 
 }
