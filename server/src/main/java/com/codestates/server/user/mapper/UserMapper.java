@@ -7,6 +7,7 @@ import com.codestates.server.user.dto.UserResponseDto;
 import com.codestates.server.user.entity.User;
 import org.mapstruct.Mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
@@ -14,8 +15,10 @@ import java.util.List;
 public interface UserMapper {
 
     User userPostDtoToUser(UserPostDto userPostDto);
+
     User userPatchDtoToUser(UserPatchDto userPatchDto);
-    UserLoginDto userToUserLoginDto(User user);
+
     UserResponseDto userToUserResponseDto(User user);
+
     List<UserResponseDto> usersToUserResponseDto(List<User> users);
 }
