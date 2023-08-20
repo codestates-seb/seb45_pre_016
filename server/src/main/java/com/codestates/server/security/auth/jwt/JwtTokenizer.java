@@ -29,7 +29,7 @@ public class JwtTokenizer {
 
     @Getter
     @Value("${jwt.refresh-token-expiration-minutes}")
-    private int refreshTokenExirationMinutes;   // Refresh Token 에 대한 만료 시간 정보
+    private int refreshTokenExpirationMinutes;   // Refresh Token 에 대한 만료 시간 정보
 
     /*
      * Plain Text 형태의 SecretKey -> Base64 형식 문자열로 인코딩

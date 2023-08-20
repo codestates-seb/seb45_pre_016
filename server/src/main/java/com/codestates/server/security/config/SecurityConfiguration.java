@@ -43,8 +43,8 @@ public class SecurityConfiguration {
                 .and()
                 .csrf().disable()
                 .cors(withDefaults())   // SecurityConfiguration Bean 이용
-                .cors(configuration -> configuration
-                        .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
+//                .cors(configuration -> configuration
+//                        .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 생성하지 않도록 설정
                 .and()
                 .formLogin().disable()
@@ -79,9 +79,11 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("*"));    // 모든 출처에 대한 통신 허용
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+        configuration.addExposedHeader("*");
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));   // 지정한 HTTPMethod에 대한 통신 허용
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration); // 구성한 CORS 정책 적용
         return source;
