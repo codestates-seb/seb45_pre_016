@@ -12,8 +12,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -35,7 +33,6 @@ public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
-    private final SecurityCorsConfig corsConfig;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -43,9 +40,9 @@ public class SecurityConfiguration {
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .csrf().disable()
-//                .cors(withDefaults())   // SecurityConfiguration Bean 이용
-//                .cors(configuration -> configuration
-//                        .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
+                .cors(withDefaults())   // SecurityConfiguration Bean 이용
+                .cors(configuration -> configuration
+                        .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 생성하지 않도록 설정
                 .and()
                 .formLogin().disable()
@@ -85,11 +82,25 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("*"));    // 모든 출처에 대한 통신 허용
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));   // 지정한 HTTPMethod에 대한 통신 허용
+
+        // 모든 출처에 대한 통신 허용 -> 직접 출처 작성
+//        configuration.setAllowedOrigins(Arrays.asList("*"));
+
+        // 허용할 출처 패턴 설정 -> 이전 버전으로 setAllowCredentials과 사용 가능
+        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+
+        // 지정한 HTTPMethod에 대한 통신 허용
+        // "OPTIONS" : 프리플라이트 요청
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
+
+        // 클라이언트에 노출할 헤더 설정
+        configuration.setExposedHeaders(Arrays.asList("*"));
+
+        // 자격증명 (예: 쿠키, 인증 헤더 등)을 허용
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // 구성한 CORS 정책 적용
+        source.registerCorsConfiguration("/**", configuration); // 모든 엔드포인트에 구성한 CORS 적용
         return source;
     }
 
@@ -112,7 +123,6 @@ public class SecurityConfiguration {
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
 
             builder
-//                    .addFilter(corsConfig.corsFilter())
                     .addFilter(jwtAuthenticationFilter) // Spring Security Filter Chain에 추가
                     .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);  // JwtAuthenticationFilter 뒤에 jwtVerificationFilter 보내겠다
         }
