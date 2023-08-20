@@ -2,6 +2,7 @@ package com.codestates.server.user.service;
 
 import com.codestates.server.answer.entity.Answer;
 import com.codestates.server.answer.repository.AnswerRepository;
+import com.codestates.server.auth.utils.AuthUserUtils;
 import com.codestates.server.question.entity.Question;
 import com.codestates.server.question.repository.QuestionRepository;
 import com.codestates.server.security.auth.utils.CustomAuthorityUtils;
@@ -57,6 +58,10 @@ public class UserService {
     public User updateUser(User user) {
 
         User getUser = getVerifiedUser(user.getUserId());
+
+        // 로그인 User의 아이디와 회원정보를 가진 user의 아이디가 다르면 예외 던지기
+        if(!getLoginUser().getUserId().equals(getUser.getUserId()))
+            throw new RuntimeException();   // 🚨 예외처리
 
         Optional.ofNullable(user.getUserName())
                 .ifPresent(name -> getUser.setUserName(user.getUserName()));
@@ -115,7 +120,6 @@ public class UserService {
 /*
  * Pagination 구현한 getUsers()
  */
-
 //    public Page<User> getUsers(int page, int size) {
 //        // ⏹️ pagination 변경 예정
 //        return userRepository.findAll(PageRequest.of(page, size,
@@ -149,5 +153,11 @@ public class UserService {
         if(user.isPresent())
             throw new RuntimeException();
         // 🚨 예외 처리
+    }
+
+    // 로그인한 User를 가지고 오는 메서드
+    private User getLoginUser() {
+        return userRepository.findByEmail(AuthUserUtils.getAuthUser().getName())
+                .orElseThrow(() -> new RuntimeException()); // 🚨 예외처리
     }
 }
