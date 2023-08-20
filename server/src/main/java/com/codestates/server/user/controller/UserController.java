@@ -36,7 +36,6 @@ public class UserController {
     /**
     * user 회원가입
     * @param userPostDto
-    * ✅ return 부분 URI로 수정하였습니다. 하지만 post에만 적용해야할 사항인 듯 합니다!
      */
     @PostMapping("/signup")
     public ResponseEntity postUser(@Valid
@@ -74,7 +73,6 @@ public class UserController {
     /**
      * user 회원 마이페이지
      * @param userId
-     * ✅ 마찬가지 이유로 ResponseEntity response 그대로
      */
     @GetMapping("/mypage/{user-id}")
     public ResponseEntity getUser(@PathVariable("user-id") @Positive Long userId) {
@@ -87,7 +85,6 @@ public class UserController {
 
     /*
      * user 회원 전체 조회
-     * ✅ /users/usersinfo
      */
     @GetMapping
     public ResponseEntity getUsers() {
