@@ -23,5 +23,4 @@ public class QuestionPatchDto {
     @NotBlank
     private String content;
 
-    private List<String> tagNames;
 }

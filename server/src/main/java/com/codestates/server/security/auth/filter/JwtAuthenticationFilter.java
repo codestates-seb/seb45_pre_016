@@ -77,9 +77,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String refreshToken = delegateRefreshToken(user);
 
         // header에 Access Token 추가
-        response.setHeader("authorization", "Bearer " + accessToken);
+        response.setHeader("Authorization", "Bearer " + accessToken);
+
         // header에 Refresh Token 추가
-        response.setHeader("refresh", refreshToken);
+        response.setHeader("Refresh", refreshToken);
     }
 
     /*
