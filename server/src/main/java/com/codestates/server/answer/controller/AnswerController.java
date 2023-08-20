@@ -24,6 +24,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/questions/{question-id}/answers")
@@ -55,8 +56,9 @@ public class AnswerController {
             @PathVariable("question-id") @Positive Long questionId,
             @RequestBody @Valid AnswerPatchDto answerPatchDto) {
         answerPatchDto.setAnswerId(answerId);
+        Long userId = answerPatchDto.getUserId();
         Answer updatedAnswer = answerService.updateAnswer(
-                mapper.answerPatchDtoToAnswer(answerPatchDto), questionId);
+                mapper.answerPatchDtoToAnswer(answerPatchDto), questionId, userId);
 
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
@@ -65,8 +67,10 @@ public class AnswerController {
     @DeleteMapping("/{answer-id}")
     public ResponseEntity deleteAnswer(
             @PathVariable("answer-id") @Positive Long answerId,
-            @PathVariable("question-id") @Positive Long questionId) {
-        answerService.deleteAnswer(questionId, answerId);
+            @PathVariable("question-id") @Positive Long questionId,
+            @RequestBody Map<String, Long> data) {
+        Long userId = data.get("userId");
+        answerService.deleteAnswer(questionId, answerId, userId);
 
         return ResponseEntity.noContent().build();
     }
