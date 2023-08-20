@@ -33,7 +33,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private long userId;    // Long으로 쓸 지? long으로 쓸 지?
+    private Long userId;    // Long으로 쓸 지? long으로 쓸 지?
 
     @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
@@ -53,9 +53,42 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Question> questions = new ArrayList<>();
 
+//     questionInfo에서 가지고 올 data
+    public List<UserQuestionInfo> getUserQuestionInfo() {
+        List<UserQuestionInfo> userQuestionInfos = new ArrayList<>();
+
+        for(Question question : questions) {
+            UserQuestionInfo userQuestionInfo = new UserQuestionInfo();
+
+            userQuestionInfo.setQuestionId(question.getQuestionId());
+            userQuestionInfo.setTitle(question.getTitle());
+//            userQuestionInfo.setContent(question.getContent());
+            userQuestionInfo.setCreated_At(question.getCreated_At());
+
+            userQuestionInfos.add(userQuestionInfo);
+        }
+        return userQuestionInfos;
+    }
+
+
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Answer> answers = new ArrayList<>();
+
+    public List<UserAnswerInfo> getUserAnswerInfo() {
+        List<UserAnswerInfo> userAnswerInfos = new ArrayList<>();
+
+        for(Answer answer : answers) {
+            UserAnswerInfo userAnswerInfo = new UserAnswerInfo();
+
+            userAnswerInfo.setAnswerId(answer.getAnswerId());
+            userAnswerInfo.setContent(answer.getContent());
+            userAnswerInfo.setCreatedAt(answer.getCreated_At());
+
+            userAnswerInfos.add(userAnswerInfo);
+        }
+        return userAnswerInfos;
+    }
 
     /**
      * ElementCollection 을 사용하면 테이블을 생성하지 않고 컬렉션 관리가 가능

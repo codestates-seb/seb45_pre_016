@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class UserPatchDto {
 
-    private long userId;
+    private Long userId;
 
     @NotBlank(message = "회원 이름은 필수값입니다.")
     private String userName;

@@ -36,7 +36,6 @@ public class UserController {
     /**
     * user 회원가입
     * @param userPostDto
-    * ✅ return 부분 URI로 수정하였습니다. 하지만 post에만 적용해야할 사항인 듯 합니다!
      */
     @PostMapping("/signup")
     public ResponseEntity postUser(@Valid
@@ -60,7 +59,7 @@ public class UserController {
      * ✅ Patch는 수정 기능이라 response로 Response했습니다!
      */
     @PatchMapping("/mypage/edit/{user-id}")
-    public ResponseEntity patchUser(@PathVariable("user-id") @Positive long userId,
+    public ResponseEntity patchUser(@PathVariable("user-id") @Positive Long userId,
                                     @Valid @RequestBody UserPatchDto userPatchDto) {
 
         userPatchDto.setUserId(userId);
@@ -74,10 +73,9 @@ public class UserController {
     /**
      * user 회원 마이페이지
      * @param userId
-     * ✅ 마찬가지 이유로 ResponseEntity response 그대로
      */
     @GetMapping("/mypage/{user-id}")
-    public ResponseEntity getUser(@PathVariable("user-id") @Positive long userId) {
+    public ResponseEntity getUser(@PathVariable("user-id") @Positive Long userId) {
 
         User user = userService.getUser(userId);
         UserResponseDto response = mapper.userToUserResponseDto(user);
@@ -87,7 +85,6 @@ public class UserController {
 
     /*
      * user 회원 전체 조회
-     * ✅ /users/usersinfo
      */
     @GetMapping
     public ResponseEntity getUsers() {
@@ -115,7 +112,7 @@ public class UserController {
 
 
     @DeleteMapping("/{user-id}")
-    public ResponseEntity deleteUser(@PathVariable("user-id") @Positive long userId) {
+    public ResponseEntity deleteUser(@PathVariable("user-id") @Positive Long userId) {
 
         userService.deleteUser(userId);
 

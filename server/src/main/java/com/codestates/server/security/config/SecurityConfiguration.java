@@ -43,8 +43,8 @@ public class SecurityConfiguration {
                 .and()
                 .csrf().disable()
                 .cors(withDefaults())   // SecurityConfiguration Bean 이용
-//                .cors(configuration -> configuration
-//                        .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
+                .cors(configuration -> configuration
+                        .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 생성하지 않도록 설정
                 .and()
                 .formLogin().disable()
@@ -53,21 +53,26 @@ public class SecurityConfiguration {
                 .authenticationEntryPoint(new UserAuthenticationEntryPointImp())
                 .accessDeniedHandler(new UserAccessDeniedHandlerIpl())
                 .and()
-                .apply(new CustomFilterConfigurer());    // CustomFilterConfigurer 인스턴스 생성
-//                .and()
-//                .authorizeHttpRequests(authorize -> authorize
-//                        .antMatchers(HttpMethod.POST, "/users/signup").permitAll()         // 회원가입 전체 접근 가능
-//                        .antMatchers(HttpMethod.PATCH, "/users/mypage/edit/**").hasRole("USER")  // 마이페이지 수정 -> 해당 user만
-//                        .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")     // userinfo (전체 회원 조회) -> 전체 접근 가능
-//                        .antMatchers(HttpMethod.GET, "/users/mypage/**").hasAnyRole("USER", "ADMIN")  // mypage 역할 가진 사용자
-//                        .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("USER")  // user 삭제 page -> 해당 user 만
-//                        .antMatchers(HttpMethod.POST, "/questions/ask").hasAnyRole("USER", "ADMIN") // user/ask 역할 가진 사용자
-//                        .antMatchers(HttpMethod.PATCH, "/quesitons/**").hasAnyRole("USER", "ADMIN")
-//                        .antMatchers(HttpMethod.GET, "/question/**").permitAll()
-//                        .antMatchers(HttpMethod.GET, "/guestions/**").permitAll()   // 질문 조회 -> 전체 접근 가능
-//                        .antMatchers(HttpMethod.DELETE, "/questions/delete/**").hasAnyRole("USER", "ADMIN")
-//
-//                );
+                .apply(new CustomFilterConfigurer())    // CustomFilterConfigurer 인스턴스 생성
+                .and()
+                .authorizeHttpRequests(authorize -> authorize
+                        .antMatchers(HttpMethod.POST, "/users/signup").permitAll()         // 회원가입 전체 접근 가능
+                        .antMatchers(HttpMethod.PATCH, "/users/mypage/edit/**").hasRole("USER")  // 마이페이지 수정 -> 해당 user만
+                        .antMatchers(HttpMethod.GET, "/users").permitAll()     // userinfo (전체 회원 조회) -> 전체 접근 가능
+                        .antMatchers(HttpMethod.GET, "/users/mypage/**").hasAnyRole("USER", "ADMIN")  // mypage 역할 가진 사용자
+                        .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("USER")  // user 삭제 page -> 해당 user 만
+
+                        .antMatchers(HttpMethod.POST, "/questions/ask").hasAnyRole("USER", "ADMIN") // user/ask 역할 가진 사용자
+                        .antMatchers(HttpMethod.PATCH, "/questions/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers(HttpMethod.GET, "/questions").permitAll()
+                        .antMatchers(HttpMethod.GET, "/guestions/**").permitAll()   // 질문 조회 -> 전체 접근 가능
+                        .antMatchers(HttpMethod.DELETE, "/questions/delete/**").hasAnyRole("USER", "ADMIN")
+
+                        .antMatchers(HttpMethod.POST, "/questions/**/answers").hasAnyRole("USER", "ADMIN")
+                        .antMatchers(HttpMethod.PATCH, "/questions/**/answers/**").hasAnyRole("USER","ADMIN")
+                        .antMatchers(HttpMethod.DELETE, "/questions/**/answers/**").hasAnyRole("USER","ADMIN")
+                );
+
         return http.build();
     }
 
@@ -79,13 +84,25 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowCredentials(true);
+
+        // 모든 출처에 대한 통신 허용 -> 직접 출처 작성
+//        configuration.setAllowedOrigins(Arrays.asList("*"));
+
+        // 허용할 출처 패턴 설정 -> 이전 버전으로 setAllowCredentials과 사용 가능
         configuration.setAllowedOriginPatterns(Arrays.asList("*"));
-        configuration.addExposedHeader("*");
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));   // 지정한 HTTPMethod에 대한 통신 허용
+
+        // 지정한 HTTPMethod에 대한 통신 허용
+        // "OPTIONS" : 프리플라이트 요청
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
+
+        // 클라이언트에 노출할 헤더 설정
+        configuration.setExposedHeaders(Arrays.asList("*"));
+
+        // 자격증명 (예: 쿠키, 인증 헤더 등)을 허용
+        configuration.setAllowCredentials(true);
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // 구성한 CORS 정책 적용
+        source.registerCorsConfiguration("/**", configuration); // 모든 엔드포인트에 구성한 CORS 적용
         return source;
     }
 
