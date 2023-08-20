@@ -30,21 +30,21 @@ public class QuestionService {
         return questionRepository.save(question);
     }
 
-    public Question updateQuestion(Question question){
+    public Question updateQuestion(Question question, Long userId){
         Optional<Question> optionalQuestion = questionRepository.findById(question.getQuestionId());
 
         Question findedQuestion = optionalQuestion.orElseThrow();
-
-        Long reqUserId = question.getUser().getUserId();
         Long savedUserId = findedQuestion.getUser().getUserId();
 
-        if(reqUserId == savedUserId){
+        log.info("user findeduser = {} , requeser = {}", savedUserId, userId);
+
+        if(userId == savedUserId){
             findedQuestion.setTitle(question.getTitle());
             findedQuestion.setContent(question.getContent());
             BeanUtils.copyProperties(findedQuestion,question,"question_id");
             return questionRepository.save(question);
         }else {
-            throw new RuntimeException("유저가 다릅니다.");
+            throw new RuntimeException("유저가 다릅니다."); //exception 수정 필요
         }
     }
 
@@ -62,10 +62,18 @@ public class QuestionService {
         return questionRepository.findAll();
     }
 
-    public void deleteQuestion(Long questionId){
+    public void deleteQuestion(Long questionId, Long userId){
         Optional<Question> optionalQuestion = questionRepository.findById(questionId);
         Question findedQuestion = optionalQuestion.orElseThrow();
-        questionRepository.delete(findedQuestion);
+
+        long savedUserId = findedQuestion.getUser().getUserId();
+
+        if(savedUserId == userId){
+            questionRepository.delete(findedQuestion);
+        }else {
+            throw new RuntimeException("유저가 다릅니다.");  //exception 수정 필요
+        }
+
     }
 
     //조회수 증가(get Question)
