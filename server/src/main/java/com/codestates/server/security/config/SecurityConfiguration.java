@@ -63,14 +63,14 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("USER")  // user 삭제 page -> 해당 user 만
 
                         .antMatchers(HttpMethod.POST, "/questions/ask").hasAnyRole("USER", "ADMIN") // user/ask 역할 가진 사용자
-                        .antMatchers(HttpMethod.PATCH, "/quesitons/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers(HttpMethod.PATCH, "/questions/**").hasAnyRole("USER", "ADMIN")
                         .antMatchers(HttpMethod.GET, "/questions").permitAll()
                         .antMatchers(HttpMethod.GET, "/guestions/**").permitAll()   // 질문 조회 -> 전체 접근 가능
                         .antMatchers(HttpMethod.DELETE, "/questions/delete/**").hasAnyRole("USER", "ADMIN")
 
-                        .antMatchers(HttpMethod.POST, "/questions/{questions-id}").hasAnyRole("USER", "ADMIN")
-                        .antMatchers(HttpMethod.PATCH, "/questions/**/answer/**").hasAnyRole("USER","ADMIN")
-                        .antMatchers(HttpMethod.DELETE, "/questions/**/answer/**").hasAnyRole("USER","ADMIN")
+                        .antMatchers(HttpMethod.POST, "/questions/**/answers").hasAnyRole("USER", "ADMIN")
+                        .antMatchers(HttpMethod.PATCH, "/questions/**/answers/**").hasAnyRole("USER","ADMIN")
+                        .antMatchers(HttpMethod.DELETE, "/questions/**/answers/**").hasAnyRole("USER","ADMIN")
                 );
 
         return http.build();
