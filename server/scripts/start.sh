@@ -13,12 +13,6 @@ TIME_NOW=$(date +%c)
 
 export CREDENTIALS_FILE="/home/ubuntu/service_account.json"
 
-
-# build 파일 복사
-echo "$TIME_NOW > $JAR_FILE 파일 복사!" >> $DEPLOY_LOG
-cp $PROJECT_ROOT/build/libs/*.jar $PROJECT_ROOT
-
-
 # jar 파일 실행
 echo "$TIME_NOW > $JAR_FILE 파일 실행" >> $DEPLOY_LOG
 nohup java -jar $JAR_FILE > $APP_LOG 2> $ERROR_LOG &
