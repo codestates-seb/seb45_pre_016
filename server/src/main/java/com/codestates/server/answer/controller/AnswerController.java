@@ -7,17 +7,13 @@ import com.codestates.server.answer.dto.AnswerResponseDto;
 import com.codestates.server.answer.entity.Answer;
 import com.codestates.server.answer.mapper.AnswerMapper;
 import com.codestates.server.answer.service.AnswerService;
-import com.codestates.server.question.entity.Question;
-import com.codestates.server.question.service.QuestionService;
+import com.codestates.server.exception.BusinessLogicException;
 import com.codestates.server.question.uri.UriCreator;
-import com.codestates.server.user.entity.User;
-import com.codestates.server.user.service.UserService;
+import com.codestates.server.response.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,6 +21,7 @@ import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
+
 
 @RestController
 @RequestMapping("/questions/{question-id}/answers")
@@ -36,24 +33,25 @@ public class AnswerController {
     private final AnswerMapper mapper;
 
     @PostMapping
-    public ResponseEntity createAnswer(
-            @RequestBody @Valid AnswerPostDto answerPostDto,
-            @PathVariable("question-id") Long questionId) {
+    public ResponseEntity<?> createAnswer(@Valid @RequestBody AnswerPostDto answerPostDto, @PathVariable("question-id") Long questionId) {
+        try {
+            log.info(" questionId = {}", questionId);
 
-        log.info(" questionId = {}", questionId);
+            Answer createdAnswer = answerService.createAnswer(
+                    mapper.answerPostDtoToAnswer(answerPostDto), questionId, answerPostDto.getUserId());
+            URI location = UriCreator.createUri("/questions/" + questionId, createdAnswer.getAnswerId());
+            return ResponseEntity.created(location).build();
 
-        Answer createdAnswer = answerService.createAnswer(
-                mapper.answerPostDtoToAnswer(answerPostDto), questionId, answerPostDto.getUserId());
-
-        URI location = UriCreator.createUri("/questions/"+questionId, createdAnswer.getAnswerId());
-
-        return ResponseEntity.created(location).build();
+        } catch (BusinessLogicException e) {
+            return ResponseEntity.status(e.getExceptionCode().getStatus())
+                    .body(new ErrorResponse(e.getExceptionCode().getStatus(), e.getExceptionCode().getMessage()));
+        }
     }
 
     @PatchMapping("/{answer-id}")
-    public ResponseEntity updateAnswer(
-            @PathVariable("answer-id") @Positive Long answerId,
-            @PathVariable("question-id") @Positive Long questionId,
+    public ResponseEntity<?> updateAnswer(
+            @PathVariable("answer-id") @Positive long answerId,
+            @PathVariable("question-id") @Positive long questionId,
             @RequestBody @Valid AnswerPatchDto answerPatchDto) {
         answerPatchDto.setAnswerId(answerId);
         Long userId = answerPatchDto.getUserId();
@@ -62,7 +60,6 @@ public class AnswerController {
 
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
-
 
     @DeleteMapping("/{answer-id}")
     public ResponseEntity deleteAnswer(
