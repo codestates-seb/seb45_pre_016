@@ -7,16 +7,17 @@ import ModalBasic from "../components/Modal";
 import { InputForm } from "../components/InputForm";
 
 import { AllContainer } from "../styles/Style";
+import { PostAsk } from "../utils/API";
 
 export const AskQuestions = () => {
   const [IsModalOpen, setModalOpen] = useState(false);
   const [post, setPost] = useState(false);
-  const [title, setTitle] = useState("d");
   
   
 
   const postQuestion = () => {
-    localStorage.setItem('title', title);
+    PostAsk();
+    console.log(localStorage.getItem("title"))
   };
 
   const changeToPostPage = () => {
@@ -30,7 +31,7 @@ export const AskQuestions = () => {
   return (
     <div key="" className="post-question-all">
       <AllContainer>
-        <InputForm onClick={changeToPostPage} post={post} setTitle={setTitle}/>
+        <InputForm onClick={changeToPostPage} post={post}/>
         <div className="btn-flex">
           {post === true && (
             <Button
