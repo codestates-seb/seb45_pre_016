@@ -1,9 +1,7 @@
 package com.codestates.server.question.dto;
 
-import com.codestates.server.question.entity.QuestionTag;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;

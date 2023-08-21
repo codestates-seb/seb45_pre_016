@@ -59,7 +59,7 @@ public class AnswerController {
         Answer updatedAnswer = answerService.updateAnswer(
                 mapper.answerPatchDtoToAnswer(answerPatchDto), questionId, userId);
 
-        return new ResponseEntity(HttpStatus.ACCEPTED);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @DeleteMapping("/{answer-id}")
