@@ -1,15 +1,20 @@
 package com.codestates.server.question.service;
 
+import com.codestates.server.auth.utils.AuthUserUtils;
 import com.codestates.server.question.entity.Question;
 import com.codestates.server.question.entity.QuestionTag;
 import com.codestates.server.question.repository.QuestionRepository;
 import com.codestates.server.question.repository.QuestionTagRepository;
+import com.codestates.server.user.entity.User;
+import com.codestates.server.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,15 +24,26 @@ import java.util.Optional;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
+    private final UserRepository userRepository;
 
-    public QuestionService(QuestionRepository questionRepository) {
+    public QuestionService(QuestionRepository questionRepository, UserRepository userRepository) {
         this.questionRepository = questionRepository;
+        this.userRepository = userRepository;
     }
 
-    public Question createQuestion(Question question){
+    public Question createQuestion(Question question, Long userId){
 
-        question.setViews(0L);
-        return questionRepository.save(question);
+        User user = userRepository.findByEmail(AuthUserUtils.getAuthUser().getName())
+                .orElseThrow(() -> new RuntimeException("에러~"));
+
+        if(user.getUserId().equals(userId)){
+            question.setViews(0L);
+            return questionRepository.save(question);
+        }else {
+            throw new RuntimeException("유저가 다릅니다.");
+        }
+
+
     }
 
     public Question updateQuestion(Question question, Long userId){
@@ -39,6 +55,7 @@ public class QuestionService {
         if(userId == savedUserId){
             findedQuestion.setTitle(question.getTitle());
             findedQuestion.setContent(question.getContent());
+            findedQuestion.setModifiedAt(LocalDateTime.now());
             BeanUtils.copyProperties(findedQuestion,question,"question_id");
             return questionRepository.save(question);
         }else {

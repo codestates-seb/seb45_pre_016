@@ -80,8 +80,8 @@ public class UserService {
             Question userQuestion = new Question();
             userQuestion.setQuestionId(question.getQuestionId());
             userQuestion.setTitle(question.getTitle());
-//            userQuestion.setContent(question.getContent());
-            userQuestion.setCreated_At(question.getCreated_At());
+            userQuestion.setContent(question.getContent());
+            userQuestion.setCreatedAt(question.getCreatedAt());
             userQuestionList.add(userQuestion);
         }
 
@@ -158,6 +158,7 @@ public class UserService {
     // 로그인한 User를 가지고 오는 메서드
     private User getLoginUser() {
         return userRepository.findByEmail(AuthUserUtils.getAuthUser().getName())
+
                 .orElseThrow(() -> new RuntimeException()); // 🚨 예외처리
     }
 }

@@ -63,7 +63,7 @@ public interface QuestionMapper {
         questionResponseDto.setTitle( question.getTitle() );
         questionResponseDto.setContent( question.getContent() );
         questionResponseDto.setViews( question.getViews() );
-        questionResponseDto.setModified_At( question.getModified_At() );
+        questionResponseDto.setModified_At( question.getModifiedAt() );
 
         questionResponseDto.setTags(tags);
         questionResponseDto.setAnswers(answers);

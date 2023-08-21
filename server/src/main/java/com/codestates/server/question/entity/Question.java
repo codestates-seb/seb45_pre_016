@@ -1,6 +1,7 @@
 package com.codestates.server.question.entity;
 
 import com.codestates.server.answer.entity.Answer;
+import com.codestates.server.audit.TimeStamp;
 import com.codestates.server.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -21,8 +22,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@EntityListeners(AuditingEntityListener.class)
-public class Question {
+public class Question extends TimeStamp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,9 +58,9 @@ public class Question {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @CreatedDate
-    private LocalDateTime created_At;
-
-    @LastModifiedDate
-    private LocalDateTime modified_At;
+//    @CreatedDate
+//    private LocalDateTime created_At;
+//
+//    @LastModifiedDate
+//    private LocalDateTime modified_At;
 }

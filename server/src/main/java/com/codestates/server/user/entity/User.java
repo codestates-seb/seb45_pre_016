@@ -63,7 +63,7 @@ public class User {
             userQuestionInfo.setQuestionId(question.getQuestionId());
             userQuestionInfo.setTitle(question.getTitle());
 //            userQuestionInfo.setContent(question.getContent());
-            userQuestionInfo.setCreated_At(question.getCreated_At());
+            userQuestionInfo.setCreated_At(question.getCreatedAt());
 
             userQuestionInfos.add(userQuestionInfo);
         }
