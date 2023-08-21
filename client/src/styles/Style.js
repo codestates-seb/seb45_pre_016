@@ -13,9 +13,13 @@ export const AllContainer = styled.div`
     margin-top: 16px;
   }
 
-  .alert,
   .hidden {
     display: none;
+  }
+
+  .btn-flex {
+    display: flex;
+    flex-direction: row;
   }
 `;
 
@@ -26,10 +30,13 @@ export const Title = styled.div`
   line-height: 1.3;
 `;
 
-export const FinalReview = styled.div`
-  display: none;
-  font-size: 13px;
-  margin-bottom: 12px;
+export const Description = styled.div`
+  font-size: 15px;
+  background-color: #ebf4fb;
+  padding: 16px;
+  border: 1px solid #a6ceed;
+  border-radius: 6px;
+  margin-bottom: 16px;
 `;
 
 export const Notice = styled.div`
@@ -187,6 +194,10 @@ export const ButtonStyle = styled.button`
     border: 1px solid #59a4de;
     box-shadow: 0 0 0 4px #deeaf7;
   }
+
+  &.postbtn-margin {
+    margin: 4px 8px 0px;
+  }
 `;
 
 export const DiscardButton = styled.button`
@@ -280,7 +291,7 @@ export const Modal = styled.div`
     text-align: center;
     padding: 24px;
     border-radius: 8px;
-    box-shadow: 0 1px 4px hsla(0,0%,0%,0.09);
+    box-shadow: 0 1px 4px hsla(0, 0%, 0%, 0.09);
   }
 
   p {
@@ -327,7 +338,8 @@ export const Modal = styled.div`
   .cancel {
     color: #3b4045;
   }
-  .cancel:hover, .close-btn:hover {
+  .cancel:hover,
+  .close-btn:hover {
     background-color: hsl(210, 8%, 97.5%);
   }
   .cancel:active {

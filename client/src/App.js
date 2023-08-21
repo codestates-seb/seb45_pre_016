@@ -1,13 +1,16 @@
 /* eslint-disable react/react-in-jsx-scope */
-import './App.css';
-import { AskQuestions } from './pages/AskQuestions';
+import "./App.css";
+import { AskQuestions } from "./pages/AskQuestions";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     // eslint-disable-next-line react/react-in-jsx-scope
-    <div className="App">
-    <AskQuestions />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="ask" element={<AskQuestions />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

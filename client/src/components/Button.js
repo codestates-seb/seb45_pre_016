@@ -2,36 +2,15 @@
 import { ButtonStyle, DiscardButton } from "../styles/Style";
 import React from "react";
 
-export const Button = ({
-  onClick,
-  text,
-  className,
-  isFocused,
-  value,
-  disabled,
-}) => {
+export const Button = ({ className, onClick, text }) => {
   return (
     <div>
-      {className !== "discard" ? (
-        <ButtonStyle
-          value={value}
-          isFocused={isFocused}
-          className={className}
-          onClick={onClick}
-          disabled={disabled}
-        >
+      {text !== "Discard draft" ? (
+        <ButtonStyle className={className} onClick={onClick}>
           {text}
         </ButtonStyle>
       ) : (
-        <DiscardButton
-          value={value}
-          isFocused={isFocused}
-          className={className}
-          onClick={onClick}
-          disabled={disabled}
-        >
-          {text}
-        </DiscardButton>
+        <DiscardButton onClick={onClick}>{text}</DiscardButton>
       )}
     </div>
   );

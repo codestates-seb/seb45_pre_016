@@ -3,7 +3,10 @@
 import { Modal } from "../styles/Style";
 
 const ModalBasic = ({ setModalOpen }) => {
-  // 모달 끄기
+  const resetQuestion = () => {
+    console.log("질문 전체 조회 페이지로 이동")
+  }
+
   const closeModal = (e) => {
     if (
       e.target.className === "close-back" ||
@@ -30,7 +33,7 @@ const ModalBasic = ({ setModalOpen }) => {
             undone.
           </p>
           <div className="flex">
-            <div className="discardq">Discard question</div>
+            <div className="discardq" onClick={resetQuestion}>Discard question</div>
             <div onClick={closeModal} className="cancel">
               Cancel
             </div>

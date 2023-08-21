@@ -1,83 +1,46 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/no-children-prop */
 /* eslint-disable react/react-in-jsx-scope */
 import { Button } from "../components/Button";
 import { useState } from "react";
 import ModalBasic from "../components/Modal";
 import { InputForm } from "../components/InputForm";
-import {
-  Notice,
-  Title,
-  FinalReview,
-  AllContainer,
-  Container,
-} from "../styles/Style";
+
+import { AllContainer } from "../styles/Style";
 
 export const AskQuestions = () => {
   const [IsModalOpen, setModalOpen] = useState(false);
- 
+  const [post, setPost] = useState(false);
+  const [title, setTitle] = useState("d");
+  
+  
 
+  const postQuestion = () => {
+    localStorage.setItem('title', title);
+  };
+
+  const changeToPostPage = () => {
+    setPost(true);
+  };
 
   const showModal = () => {
     setModalOpen(true);
   };
 
-
-
   return (
-    <div key="" className="post-question">
+    <div key="" className="post-question-all">
       <AllContainer>
-        <Title>Ask a public question</Title>
-        <FinalReview>
-          Please do a final review of your question and then post.
-        </FinalReview>
-        <div className="flexbox">
-          <Notice>
-            <h2>Writing a good question</h2>
-            <p>
-              You’re ready to{" "}
-              <a href="https://stackoverflow.com/help/how-to-ask">ask</a> a{" "}
-              <a href="https://stackoverflow.com/help/on-topic">
-                programming-related question
-              </a>{" "}
-              and this form will help guide you through the process.
-            </p>
-            <p className="margin">
-              Looking to ask a non-programming question? See{" "}
-              <a href="https://stackexchange.com/sites#technology">
-                the topics here
-              </a>{" "}
-              to find a relevant site.
-            </p>
-            <div className="steps">
-              <h5>steps</h5>
-              <ul>
-                <li>Summarize your problem in a one-line title.</li>
-                <li>Describe your problem in more detail.</li>
-                <li>
-                  Describe what you tried and what you expected to happen.
-                </li>
-                <li>
-                  Add “tags” which help surface your question to members of the
-                  community.
-                </li>
-                <li>Review your question and post it to the site.</li>
-              </ul>
-            </div>
-          </Notice>
-        </div>
+        <InputForm onClick={changeToPostPage} post={post} setTitle={setTitle}/>
+        <div className="btn-flex">
+          {post === true && (
+            <Button
+              className="postbtn-margin"
+              text="Post your question"
+              onClick={postQuestion}
+            />
+          )}
 
-        <Container>
-          <InputForm />
-        </Container>
-
-        <div>
-          <button className="hidden">Post your question</button>
-          <Button
-            className="hidden"
-            value="discard"
-            text="Discard draft"
-            onClick={showModal}
-          >
-          </Button>
+          <Button text="Discard draft" onClick={showModal} />
         </div>
         {IsModalOpen && <ModalBasic setModalOpen={setModalOpen} />}
       </AllContainer>

@@ -9,7 +9,7 @@ import down from "../utils/downarrow.png";
 import up from "../utils/uparrow.png";
 
 const ReviewDropdown = () => {
-  const options = ["관련 리뷰 내용 로딩"];
+  const options = ["No duplicate questions found."];
   const [isClicked, setIsClicked] = useState(true);
   const [isChosen, setIsChosen] = useState();
   const [isSelected, setIsSelected] = useState(
