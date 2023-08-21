@@ -43,8 +43,6 @@ public class SecurityConfiguration {
                 .and()
                 .csrf().disable()
                 .cors(withDefaults())   // SecurityConfiguration Bean 이용
-//                .cors(configuration -> configuration
-//                        .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 생성하지 않도록 설정
                 .and()
                 .formLogin().disable()
@@ -53,21 +51,21 @@ public class SecurityConfiguration {
                 .authenticationEntryPoint(new UserAuthenticationEntryPointImp())
                 .accessDeniedHandler(new UserAccessDeniedHandlerIpl())
                 .and()
-                .apply(new CustomFilterConfigurer());    // CustomFilterConfigurer 인스턴스 생성
-//                .and()
-//                .authorizeHttpRequests(authorize -> authorize
-//                        .antMatchers(HttpMethod.POST, "/users/signup").permitAll()         // 회원가입 전체 접근 가능
-//                        .antMatchers(HttpMethod.PATCH, "/users/mypage/edit/**").hasRole("USER")  // 마이페이지 수정 -> 해당 user만
-//                        .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")     // userinfo (전체 회원 조회) -> 전체 접근 가능
-//                        .antMatchers(HttpMethod.GET, "/users/mypage/**").hasAnyRole("USER", "ADMIN")  // mypage 역할 가진 사용자
-//                        .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("USER")  // user 삭제 page -> 해당 user 만
-//                        .antMatchers(HttpMethod.POST, "/questions/ask").hasAnyRole("USER", "ADMIN") // user/ask 역할 가진 사용자
-//                        .antMatchers(HttpMethod.PATCH, "/quesitons/**").hasAnyRole("USER", "ADMIN")
-//                        .antMatchers(HttpMethod.GET, "/question/**").permitAll()
-//                        .antMatchers(HttpMethod.GET, "/guestions/**").permitAll()   // 질문 조회 -> 전체 접근 가능
-//                        .antMatchers(HttpMethod.DELETE, "/questions/delete/**").hasAnyRole("USER", "ADMIN")
-//
-//                );
+                .apply(new CustomFilterConfigurer())    // CustomFilterConfigurer 인스턴스 생성
+                .and()
+                .authorizeHttpRequests(authorize -> authorize
+                        .antMatchers(HttpMethod.POST, "/users/signup").permitAll()         // 회원가입 전체 접근 가능
+                        .antMatchers(HttpMethod.PATCH, "/users/mypage/edit/**").hasRole("USER")  // 마이페이지 수정 -> 해당 user만
+                        .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")     // userinfo (전체 회원 조회) -> 전체 접근 가능
+                        .antMatchers(HttpMethod.GET, "/users/mypage/**").hasAnyRole("USER", "ADMIN")  // mypage 역할 가진 사용자
+                        .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("USER")  // user 삭제 page -> 해당 user 만
+                        .antMatchers(HttpMethod.POST, "/questions/ask").hasAnyRole("USER", "ADMIN") // user/ask 역할 가진 사용자
+                        .antMatchers(HttpMethod.PATCH, "/quesitons/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers(HttpMethod.GET, "/question/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/guestions/**").permitAll()   // 질문 조회 -> 전체 접근 가능
+                        .antMatchers(HttpMethod.DELETE, "/questions/delete/**").hasAnyRole("USER", "ADMIN")
+
+                );
         return http.build();
     }
 

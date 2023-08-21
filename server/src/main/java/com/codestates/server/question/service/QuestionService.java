@@ -34,9 +34,7 @@ public class QuestionService {
         Optional<Question> optionalQuestion = questionRepository.findById(question.getQuestionId());
 
         Question findedQuestion = optionalQuestion.orElseThrow();
-        Long savedUserId = findedQuestion.getUser().getUserId();
-
-        log.info("user findeduser = {} , requeser = {}", savedUserId, userId);
+        long savedUserId = findedQuestion.getUser().getUserId();
 
         if(userId == savedUserId){
             findedQuestion.setTitle(question.getTitle());
