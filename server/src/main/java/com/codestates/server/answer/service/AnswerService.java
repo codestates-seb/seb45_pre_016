@@ -24,33 +24,30 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
     private final QuestionService questionService;
     private final UserService userService;
-    private final QuestionRepository questionRepository;
-    private final UserRepository userRepository;
 
-    public AnswerService(AnswerRepository answerRepository, QuestionService questionService, UserService userService, QuestionRepository questionRepository, UserRepository userRepository) {
+    public AnswerService(AnswerRepository answerRepository, QuestionService questionService, UserService userService) {
         this.answerRepository = answerRepository;
         this.questionService = questionService;
         this.userService = userService;
-        this.questionRepository = questionRepository;
-        this.userRepository = userRepository;
     }
 
     public Answer createAnswer(Answer answer, Long questionId, Long userId) {
 
-//        Question question = questionService.findQuestion(questionId);
-//        User user = userService.getUser(userId);
+        // Question Id 있는지 찾기
+        Question question = questionService.findQuestion(questionId);
+        // userService에서 Login한 사용자의 정보 가지고 오기  -> 로그인 안 했으면 예외 던질것임..!
+        long loginUserId = userService.getLoginUser().getUserId();
 
-        Question question = questionRepository.findById(questionId)
-                .orElseThrow(()-> new RuntimeException("hi"));
+        if(userId == loginUserId){
+            answer.setUser(userService.getLoginUser());
+            // answer에 Question set하기 (위에서 있는지 찾았으니까)
+            answer.setQuestion(question);
+            answerRepository.save(answer);
+            return answer;
+        }else {
+            throw new RuntimeException("에러발생");
+        }
 
-        User user = userRepository.findById(userId)
-                        .orElseThrow(()-> new RuntimeException("hi"));
-
-        answer.setQuestion(question);
-        answer.setUser(user);
-
-        answerRepository.save(answer);
-        return answer;
     }
 
     public Answer updateAnswer(Answer answer, long questionId, long userId) {

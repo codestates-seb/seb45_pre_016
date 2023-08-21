@@ -1,22 +1,19 @@
 package com.codestates.server.question.service;
 
 import com.codestates.server.auth.utils.AuthUserUtils;
+import com.codestates.server.exception.BusinessLogicException;
+import com.codestates.server.exception.ExceptionCode;
 import com.codestates.server.question.entity.Question;
-import com.codestates.server.question.entity.QuestionTag;
 import com.codestates.server.question.repository.QuestionRepository;
-import com.codestates.server.question.repository.QuestionTagRepository;
 import com.codestates.server.user.entity.User;
 import com.codestates.server.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -34,59 +31,57 @@ public class QuestionService {
     public Question createQuestion(Question question, Long userId){
 
         User user = userRepository.findByEmail(AuthUserUtils.getAuthUser().getName())
-                .orElseThrow(() -> new RuntimeException("에러~"));
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
         if(user.getUserId().equals(userId)){
             question.setViews(0L);
             return questionRepository.save(question);
         }else {
-            throw new RuntimeException("유저가 다릅니다.");
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
-
-
     }
 
     public Question updateQuestion(Question question, Long userId){
-        Optional<Question> optionalQuestion = questionRepository.findById(question.getQuestionId());
 
-        Question findedQuestion = optionalQuestion.orElseThrow();
+        Question findedQuestion = questionRepository.findById(question.getQuestionId())
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+
         long savedUserId = findedQuestion.getUser().getUserId();
 
         if(userId == savedUserId){
             findedQuestion.setTitle(question.getTitle());
             findedQuestion.setContent(question.getContent());
             findedQuestion.setModifiedAt(LocalDateTime.now());
-            BeanUtils.copyProperties(findedQuestion,question,"question_id");
+            BeanUtils.copyProperties(findedQuestion,question,"question_id");  //questionId 빼고 복사
             return questionRepository.save(question);
         }else {
-            throw new RuntimeException("유저가 다릅니다."); //exception 수정 필요
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
     }
 
     public Question findQuestion(Long questionsId) {
-        Optional<Question> optionalQuestion = questionRepository.findById(questionsId);
-        Question question = optionalQuestion.orElseThrow();
-
+        Question question = questionRepository.findById(questionsId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
         viewCountUp(question);
         questionRepository.save(question);
 
         return question;
     }
 
-    public List<Question> findAllQuestions(){  //findAll
+    public List<Question> findAllQuestions(){  //페이지네이션?
         return questionRepository.findAll();
     }
 
     public void deleteQuestion(Long questionId, Long userId){
-        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
-        Question findedQuestion = optionalQuestion.orElseThrow();
+        Question findedQuestion = questionRepository.findById(questionId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
 
         long savedUserId = findedQuestion.getUser().getUserId();
 
         if(savedUserId == userId){
             questionRepository.delete(findedQuestion);
         }else {
-            throw new RuntimeException("유저가 다릅니다.");  //exception 수정 필요
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
 
     }

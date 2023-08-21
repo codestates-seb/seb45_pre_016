@@ -156,7 +156,7 @@ public class UserService {
     }
 
     // 로그인한 User를 가지고 오는 메서드
-    private User getLoginUser() {
+    public User getLoginUser() {
         return userRepository.findByEmail(AuthUserUtils.getAuthUser().getName())
 
                 .orElseThrow(() -> new RuntimeException()); // 🚨 예외처리
