@@ -17,7 +17,7 @@ public class AuthUserUtils {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         // 사용자가 인증되지 않거나 익명인지 확인하고 그렇다면 예외 던지기
-        if(authentication.getName() == null || authentication.getName().equals("anoymousUser")) {
+        if(authentication.getName() == null || authentication.getName().equals("anonymousUser")) {
             throw new RuntimeException();   // 🚨 예외처리
         }
         // 인증된 사용자를 나타내는 인증 객체 반환
