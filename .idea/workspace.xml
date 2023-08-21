@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e63ab507-ea51-4ace-be51-863c5fcf061d" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/answer/controller/AnswerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/answer/controller/AnswerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/answer/dto/AnswerPatchDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/answer/dto/AnswerPatchDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/answer/dto/AnswerPostDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/answer/dto/AnswerPostDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/answer/dto/AnswerResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/answer/dto/AnswerResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/answer/entity/Answer.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/answer/entity/Answer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/answer/mapper/AnswerMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/answer/mapper/AnswerMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/answer/repository/AnswerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/answer/repository/AnswerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/answer/service/AnswerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/answer/service/AnswerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/user/dto/UserLoginDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/codestates/server/user/dto/UserLoginDto.java" afterDir="false" />
-    </list>
+    <list default="true" id="e63ab507-ea51-4ace-be51-863c5fcf061d" name="변경" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -65,6 +54,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/lumin/csiProject/project/seb45_pre_016",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -101,6 +91,7 @@
       <updated>1691900609920</updated>
       <workItem from="1691900609921" duration="11445000" />
       <workItem from="1691914484926" duration="2895000" />
+      <workItem from="1692537943421" duration="394000" />
     </task>
     <servers />
   </component>
