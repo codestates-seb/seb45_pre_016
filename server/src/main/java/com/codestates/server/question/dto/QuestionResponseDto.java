@@ -23,12 +23,16 @@ public class QuestionResponseDto {
 
     private String content;
 
-    private List<AnswerResponseDto> answers;
-
     private Long views;
+
+    private LocalDateTime modified_At;
 
     private List<Tag> tags;
 
-    private LocalDateTime modified_At;
+    private List<AnswerResponseDto> answers;
+
+
+
+
 
 }

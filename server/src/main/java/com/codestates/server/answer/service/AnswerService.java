@@ -41,14 +41,17 @@ public class AnswerService {
         return answer;
     }
 
-    public Answer updateAnswer(Answer answer, long questionId) {
+    public Answer updateAnswer(Answer answer, long questionId, long userId) {
         Question question = questionService.findQuestion(questionId);
         Answer existingAnswer = findAnswerById(answer.getAnswerId());
 
         if (existingAnswer != null) {
-            existingAnswer.setContent(answer.getContent());
-            answerRepository.save(existingAnswer);
-            return existingAnswer;
+
+            if(existingAnswer.getUser().getUserId() == userId) {
+                existingAnswer.setContent(answer.getContent());
+                answerRepository.save(existingAnswer);
+                return existingAnswer;
+            }else throw new RuntimeException("유저가 다릅니다.");
         }
 
         throw new EntityNotFoundException("답변이 검색되지 않습니다.");
@@ -58,11 +61,11 @@ public class AnswerService {
         return answerRepository.findByQuestionId(questionId);
     }
 
-    public void deleteAnswer(long questionId, long answerId) {
+    public void deleteAnswer(long questionId, long answerId, long userId) {
         Answer existingAnswer = findAnswerById(answerId);
 
         if (existingAnswer != null) {
-            if (existingAnswer.getQuestion().getQuestionId() == questionId) {
+            if (existingAnswer.getQuestion().getQuestionId() == questionId && existingAnswer.getUser().getUserId() == userId) {
                 answerRepository.deleteById(answerId);
             } else {
                 throw new IllegalArgumentException("답변이 해당 질문에 연결되어 있지 않습니다.");

@@ -25,22 +25,27 @@ public class QuestionService {
     }
 
     public Question createQuestion(Question question){
+
         question.setViews(0L);
-
-
         return questionRepository.save(question);
     }
 
-    public Question updateQuestion(Question question){
+    public Question updateQuestion(Question question, Long userId){
         Optional<Question> optionalQuestion = questionRepository.findById(question.getQuestionId());
 
         Question findedQuestion = optionalQuestion.orElseThrow();
-        //요부분 수정할 예정
-        findedQuestion.setTitle(question.getTitle());
-        findedQuestion.setContent(question.getContent());
+        Long savedUserId = findedQuestion.getUser().getUserId();
 
-        BeanUtils.copyProperties(findedQuestion,question,"question_id");
-        return questionRepository.save(question);
+        log.info("user findeduser = {} , requeser = {}", savedUserId, userId);
+
+        if(userId == savedUserId){
+            findedQuestion.setTitle(question.getTitle());
+            findedQuestion.setContent(question.getContent());
+            BeanUtils.copyProperties(findedQuestion,question,"question_id");
+            return questionRepository.save(question);
+        }else {
+            throw new RuntimeException("유저가 다릅니다."); //exception 수정 필요
+        }
     }
 
     public Question findQuestion(Long questionsId) {
@@ -57,10 +62,18 @@ public class QuestionService {
         return questionRepository.findAll();
     }
 
-    public void deleteQuestion(Long questionId){
+    public void deleteQuestion(Long questionId, Long userId){
         Optional<Question> optionalQuestion = questionRepository.findById(questionId);
         Question findedQuestion = optionalQuestion.orElseThrow();
-        questionRepository.delete(findedQuestion);
+
+        long savedUserId = findedQuestion.getUser().getUserId();
+
+        if(savedUserId == userId){
+            questionRepository.delete(findedQuestion);
+        }else {
+            throw new RuntimeException("유저가 다릅니다.");  //exception 수정 필요
+        }
+
     }
 
     //조회수 증가(get Question)

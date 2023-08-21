@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -63,8 +64,10 @@ public class QuestionController {
     public ResponseEntity patchQuestion(@PathVariable("question-id") Long questionsId,
                                 @RequestBody QuestionPatchDto questionPatchDto) {
         questionPatchDto.setQuestionId(questionsId); //question id set
+        Long userId = questionPatchDto.getUserId();
+
         Question question = mapper.questionPatchDtoToQuestion(questionPatchDto);
-        Question updatedQuestion = questionService.updateQuestion(question);
+        Question updatedQuestion = questionService.updateQuestion(question, userId);
         URI location = UriCreator.createUri("/questions", question.getQuestionId());
         return ResponseEntity.created(location).build();
     }
@@ -120,10 +123,11 @@ public class QuestionController {
      * @return
      */
     @DeleteMapping("/delete/{question-id}")
-    public ResponseEntity deleteQuestion(@PathVariable("question-id") Long questionId){
+    public ResponseEntity deleteQuestion(@PathVariable("question-id") Long questionId,
+                                         @RequestBody Map<String, Long> data){
+        Long userId = data.get("userId");
+        questionService.deleteQuestion(questionId, userId);
 
-        questionService.deleteQuestion(questionId);
-
-        return new ResponseEntity(HttpStatus.OK); //반환값 수정
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }
