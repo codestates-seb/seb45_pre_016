@@ -4,6 +4,7 @@ import com.codestates.server.answer.dto.AnswerResponseDto;
 import com.codestates.server.answer.entity.Answer;
 import com.codestates.server.answer.repository.AnswerRepository;
 import com.codestates.server.question.entity.Question;
+import com.codestates.server.question.repository.QuestionRepository;
 import com.codestates.server.question.service.QuestionService;
 import com.codestates.server.user.entity.User;
 import com.codestates.server.user.repository.UserRepository;
@@ -23,16 +24,27 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
     private final QuestionService questionService;
     private final UserService userService;
+    private final QuestionRepository questionRepository;
+    private final UserRepository userRepository;
 
-    public AnswerService(AnswerRepository answerRepository, QuestionService questionService, UserService userService) {
+    public AnswerService(AnswerRepository answerRepository, QuestionService questionService, UserService userService, QuestionRepository questionRepository, UserRepository userRepository) {
         this.answerRepository = answerRepository;
         this.questionService = questionService;
         this.userService = userService;
+        this.questionRepository = questionRepository;
+        this.userRepository = userRepository;
     }
 
     public Answer createAnswer(Answer answer, Long questionId, Long userId) {
-        Question question = questionService.findQuestion(questionId);
-        User user = userService.getUser(userId);
+
+//        Question question = questionService.findQuestion(questionId);
+//        User user = userService.getUser(userId);
+
+        Question question = questionRepository.findById(questionId)
+                .orElseThrow(()-> new RuntimeException("hi"));
+
+        User user = userRepository.findById(userId)
+                        .orElseThrow(()-> new RuntimeException("hi"));
 
         answer.setQuestion(question);
         answer.setUser(user);
