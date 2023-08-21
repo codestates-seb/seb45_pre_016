@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 @Slf4j
@@ -46,13 +45,13 @@ public class QuestionController {
      */
     @PostMapping("/ask")
     public ResponseEntity postQuestion(@RequestBody QuestionPostDto questionPostDto){
-
-        Question question = questionService.createQuestion(mapper.questionPostDtoToQuestion(questionPostDto));
-
+        Long userId = questionPostDto.getUserId();
+        Question question = questionService.createQuestion(mapper.questionPostDtoToQuestion(questionPostDto), userId);
         URI location = UriCreator.createUri("/questions", question.getQuestionId());
 
         return ResponseEntity.created(location).build();
     }
+
 
     /**
      * user 수정
@@ -65,12 +64,13 @@ public class QuestionController {
                                 @RequestBody QuestionPatchDto questionPatchDto) {
         questionPatchDto.setQuestionId(questionsId); //question id set
         Long userId = questionPatchDto.getUserId();
-
         Question question = mapper.questionPatchDtoToQuestion(questionPatchDto);
         Question updatedQuestion = questionService.updateQuestion(question, userId);
         URI location = UriCreator.createUri("/questions", question.getQuestionId());
+
         return ResponseEntity.created(location).build();
     }
+
 
     /**
      * user 검색
@@ -82,12 +82,12 @@ public class QuestionController {
         Question question = questionService.findQuestion(questionsId);
         List<Tag> tags = tagService.getTags(questionsId);
         List<Answer> answers = answerService.findByQuestionId(questionsId);
-
         List<AnswerResponseDto> answersList = answers.stream().map(answerMapper::answerToAnswerResponseDto).collect(Collectors.toList());
-
         QuestionResponseDto questionResponseDto = mapper.questionToQuestionResponseDto(question,tags,answersList);
+
         return new ResponseEntity<>(questionResponseDto,HttpStatus.OK);
     }
+
 
     /**
      * 전체 검색
@@ -112,10 +112,10 @@ public class QuestionController {
             Response<QuestionResponseDto> response = new Response<>(question.getUser().getUserId(), questionResponseDto);
             allResponse.add(response);
         }
-//        List<Response> questionResponseDtoList = allQuestions.stream().map(q->mapper.questionToQuestionResponseDto(q,)).collect(Collectors.toList());
 
         return new ResponseEntity<>(allResponse, HttpStatus.OK);
     }
+
 
     /**
      * 유저 삭제

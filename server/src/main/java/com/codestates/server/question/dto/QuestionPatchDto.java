@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
-import java.util.List;
 
 @Getter
 @Setter

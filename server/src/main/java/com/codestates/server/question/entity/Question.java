@@ -1,19 +1,13 @@
 package com.codestates.server.question.entity;
 
 import com.codestates.server.answer.entity.Answer;
+import com.codestates.server.audit.TimeStamp;
 import com.codestates.server.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.lang.reflect.Member;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +15,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@EntityListeners(AuditingEntityListener.class)
-public class Question {
+public class Question extends TimeStamp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +28,7 @@ public class Question {
     @Column(name = "question_content", nullable = false)
     private String content;
 
-    @Column(name = "question_views", nullable = true)
+    @Column(name = "question_views")
     private Long views;
 
     @JsonIgnore //순환참조 발생하여 stackoverflow 에러남 > JsonIgnore 사용해서 없애준다
@@ -57,10 +50,4 @@ public class Question {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @CreatedDate
-    private LocalDateTime created_At;
-
-    @LastModifiedDate
-    private LocalDateTime modified_At;
 }
