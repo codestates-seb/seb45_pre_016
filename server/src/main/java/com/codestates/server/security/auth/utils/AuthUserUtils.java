@@ -1,4 +1,4 @@
-package com.codestates.server.auth.utils;
+package com.codestates.server.security.auth.utils;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
