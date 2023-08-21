@@ -2,7 +2,7 @@ package com.codestates.server.user.service;
 
 import com.codestates.server.answer.entity.Answer;
 import com.codestates.server.answer.repository.AnswerRepository;
-import com.codestates.server.auth.utils.AuthUserUtils;
+import com.codestates.server.security.auth.utils.AuthUserUtils;
 import com.codestates.server.question.entity.Question;
 import com.codestates.server.question.repository.QuestionRepository;
 import com.codestates.server.security.auth.utils.CustomAuthorityUtils;
@@ -129,6 +129,10 @@ public class UserService {
 
     public void deleteUser(Long userId) {
         User getUser = getVerifiedUser(userId);
+
+        // 로그인 User의 아이디와 회원정보를 가진 user의 아이디가 다르면 예외 던지기
+        if(!getLoginUser().getUserId().equals(getUser.getUserId()))
+            throw new RuntimeException();   // 🚨 예외처리
 
         userRepository.delete(getUser);
     }
