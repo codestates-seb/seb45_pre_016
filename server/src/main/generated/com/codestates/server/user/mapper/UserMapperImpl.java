@@ -60,7 +60,7 @@ public class UserMapperImpl implements UserMapper {
 
         userResponseDto.setUserId( user.getUserId() );
         userResponseDto.setUserName( user.getUserName() );
-        userResponseDto.setImage( user.getImage() );
+        userResponseDto.setImage("https://picsum.photos/200");
         userResponseDto.setQuestions( questionListToUserQuestionInfoList( user.getQuestions() ) );
         userResponseDto.setAnswers( answerListToUserAnswerInfoList( user.getAnswers() ) );
 
