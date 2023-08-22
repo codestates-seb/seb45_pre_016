@@ -7,6 +7,7 @@ import React from 'react';
 import { useDispatch } from "react-redux";
 import { userInfo } from "../utils/userIdslice";
 import globalTokens from '../tokens/global.json';
+import Header from '../components/Header/Header';
 
 const Wrap = styled.div`
   position: fixed;
@@ -135,6 +136,7 @@ function Login() {
   
   return (
     <Wrap>
+      <Header />
       <LoginContainer>
         <LoginForm onSubmit={handleSubmit(onSubmit)}>
           <LoginLabel htmlFor="email">Email</LoginLabel>

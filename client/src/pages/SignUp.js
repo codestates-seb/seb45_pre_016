@@ -4,6 +4,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { signUp } from "../utils/API";
 import React from 'react';
 import globalTokens from '../tokens/global.json';
+import Header from '../components/Header/Header';
+
 
 const Wrap = styled.div`
   position: fixed;
@@ -174,6 +176,7 @@ function SignUp() {
 
   return (
     <Wrap>
+      <Header />
       <Container>
         <Info>
           <div>
