@@ -1,10 +1,9 @@
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2
   datasource:
-    url: jdbc:h2:mem:test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_DATABASE_URL}
+    username: ${MYSQL_DATABASE_USERNAME}
+    password: ${MYSQL_DATABASE_PASSWORD}
   jpa:          #JPA 설정
     hibernate:
       ddl-auto: create
@@ -20,8 +19,8 @@ logging:         #로그 레벨 설정
           jpa: DEBUG
 mail:
   address:
-    admin: admin@gmail.com
+    admin: ${ADMIN_EMAIL}
 jwt:
-  key: "codestates45seb16ildanhaebojo123jagosipda1234567891098765432"
+  key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
