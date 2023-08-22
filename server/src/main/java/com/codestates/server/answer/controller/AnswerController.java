@@ -54,22 +54,33 @@ public class AnswerController {
             @PathVariable("answer-id") @Positive long answerId,
             @PathVariable("question-id") @Positive long questionId,
             @RequestBody @Valid AnswerPatchDto answerPatchDto) {
-        answerPatchDto.setAnswerId(answerId);
-        Long userId = answerPatchDto.getUserId();
-        Answer updatedAnswer = answerService.updateAnswer(
-                mapper.answerPatchDtoToAnswer(answerPatchDto), questionId, userId);
+        try {
+            answerPatchDto.setAnswerId(answerId);
+            Long userId = answerPatchDto.getUserId();
+            Answer updatedAnswer = answerService.updateAnswer(
+                    mapper.answerPatchDtoToAnswer(answerPatchDto), questionId, userId);
 
-        return new ResponseEntity(HttpStatus.OK);
+            return ResponseEntity.accepted().build();
+        } catch (BusinessLogicException e) {
+            return ResponseEntity.status(e.getExceptionCode().getStatus())
+                    .body(new ErrorResponse(e.getExceptionCode().getStatus(), e.getExceptionCode().getMessage()));
+        }
     }
 
+
     @DeleteMapping("/{answer-id}")
-    public ResponseEntity deleteAnswer(
+    public ResponseEntity<?> deleteAnswer(
             @PathVariable("answer-id") @Positive Long answerId,
             @PathVariable("question-id") @Positive Long questionId,
             @RequestBody Map<String, Long> data) {
-        Long userId = data.get("userId");
-        answerService.deleteAnswer(questionId, answerId, userId);
+        try {
+            Long userId = data.get("userId");
+            answerService.deleteAnswer(questionId, answerId, userId);
 
-        return ResponseEntity.noContent().build();
+            return ResponseEntity.noContent().build();
+        } catch (BusinessLogicException e) {
+            return ResponseEntity.status(e.getExceptionCode().getStatus())
+                    .body(new ErrorResponse(e.getExceptionCode().getStatus(), e.getExceptionCode().getMessage()));
+        }
     }
 }
