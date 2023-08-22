@@ -42,9 +42,8 @@ public class SecurityConfiguration {
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .csrf().disable()
-                .cors(withDefaults())   // SecurityConfiguration Bean 이용
-                .cors(configuration -> configuration
-                        .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
+                .cors().configurationSource(corsConfigurationSource())
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 생성하지 않도록 설정
                 .and()
                 .formLogin().disable()
@@ -82,27 +81,41 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-
-        // 모든 출처에 대한 통신 허용 -> 직접 출처 작성
-//        configuration.setAllowedOrigins(Arrays.asList("*"));
-
-        // 허용할 출처 패턴 설정 -> 이전 버전으로 setAllowCredentials과 사용 가능
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
-
-        // 지정한 HTTPMethod에 대한 통신 허용
-        // "OPTIONS" : 프리플라이트 요청
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
-
-        // 클라이언트에 노출할 헤더 설정
-        configuration.setExposedHeaders(Arrays.asList("*"));
-
-        // 자격증명 (예: 쿠키, 인증 헤더 등)을 허용
+        configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
-
+        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+        configuration.addExposedHeader("*");
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE" , "OPTION"));   // 지정한 HTTPMethod에 대한 통신 허용
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // 모든 엔드포인트에 구성한 CORS 적용
+        source.registerCorsConfiguration("/**", configuration); // 구성한 CORS 정책 적용
         return source;
     }
+
+
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//
+//        // 모든 출처에 대한 통신 허용 -> 직접 출처 작성
+////        configuration.setAllowedOrigins(Arrays.asList("*"));
+//
+//        // 허용할 출처 패턴 설정 -> 이전 버전으로 setAllowCredentials과 사용 가능
+//        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+//
+//        // 지정한 HTTPMethod에 대한 통신 허용
+//        // "OPTIONS" : 프리플라이트 요청
+//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
+//
+//        // 클라이언트에 노출할 헤더 설정
+//        configuration.setExposedHeaders(Arrays.asList("*"));
+//
+//        // 자격증명 (예: 쿠키, 인증 헤더 등)을 허용
+//        configuration.setAllowCredentials(true);
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration); // 모든 엔드포인트에 구성한 CORS 적용
+//        return source;
+//    }
 
     /*
       * JwtAuthenticationFilter 등록하는 CustomFilterConfigurer 클래스
