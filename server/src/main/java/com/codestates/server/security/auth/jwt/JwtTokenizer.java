@@ -52,6 +52,22 @@ public class JwtTokenizer {
      * signwith : 서명을 위한 Key 객체 설정
      * compact : JWT 생성 및 직렬화
      */
+//    public String generateAccessToken(Map<String, Object> claims,
+//                                      Long subject,
+//                                      Date expiration,
+//                                      String base64EncodedSecretKey) {
+//
+//        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
+//
+//        return Jwts.builder()
+//                .setClaims(claims)
+//                .setSubject(String.valueOf(subject))
+//                .setIssuedAt(Calendar.getInstance().getTime())
+//                .setExpiration(expiration)
+//                .signWith(key)
+//                .compact();
+//    }
+
     public String generateAccessToken(Map<String, Object> claims,
                                       String subject,
                                       Date expiration,

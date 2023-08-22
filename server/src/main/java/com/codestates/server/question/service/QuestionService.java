@@ -83,7 +83,6 @@ public class QuestionService {
         }else {
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
-
     }
 
     //조회수 증가(get Question)
