@@ -7,7 +7,7 @@ import React from 'react';
 import { useDispatch } from "react-redux";
 import { userInfo } from "../utils/userIdslice";
 import globalTokens from '../tokens/global.json';
-import Header from '../components/Header/Header';
+import Header from "../components/Header/Header";
 
 const Wrap = styled.div`
   position: fixed;
@@ -108,13 +108,12 @@ function Login() {
       console.log("응답 데이터:", res.data); // Log the response data
 
       if (res?.status === 200) {
-        const accessToken = res.headers.authorization;
-        const userId = jwt_decode(accessToken);
-        const email = data.email; // 이메일 값을 추출합니다
-        const name = data.userName;
+        const accessToken = res.headers['authorization']; // 수정된 부분
+        const userId = jwt_decode(accessToken).userId;
+        const email = jwt_decode(accessToken).sub; // 이메일 값을 추출합니다
         localStorage.setItem("Id", email); // 이메일 값을 사용하여 저장합니다
+        localStorage.setItem("userId", userId);
         localStorage.setItem("Token", accessToken);
-        localStorage.setItem("Name", name);
         dispatch(userInfo({ userId, accessToken }));
         navigate("/");
       } else {
@@ -179,7 +178,7 @@ function Login() {
            <ErrorMsg role="alert">{errors.password.message.replace("'", "&apos;")}</ErrorMsg>
           )}
           <LoginButton type="submit" disabled={isSubmitting}>
-            Log in
+            <Link to="/main">Log in</Link>
           </LoginButton>
         </LoginForm>
       </LoginContainer>

@@ -6,6 +6,8 @@ import store from './utils/store'; // Redux 스토어의 경로를 가져옵니�
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Main from './pages/Main';
+import AskQuestions from './pages/AskQuestions';
+import QuestionDetail from './pages/QuestionDetails';
 
 function App() {
   
@@ -18,6 +20,8 @@ function App() {
             <Route path='/' element={<Main/>} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/questions/ask" element={<AskQuestions />}></Route>
+            <Route path="/questions/1" element={<QuestionDetail />}></Route>
           </Routes>
         </div>
       </Router>
