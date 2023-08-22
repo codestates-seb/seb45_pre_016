@@ -10,9 +10,9 @@ import java.util.List;
 
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
-    @Query(value = "SELECT * FROM answer WHERE question_id = :questionId", nativeQuery = true)
+    @Query(value = "SELECT * FROM Answer WHERE question_id = :questionId", nativeQuery = true)
     List<Answer> findByQuestionId(@Param("questionId") long questionId);
 
-    @Query(value = "SELECT * FROM answer WHERE user_id = :userId", nativeQuery = true)
+    @Query(value = "SELECT * FROM Answer WHERE user_id = :userId", nativeQuery = true)
     List<Answer> findAllByUserId(@Param("userId") long userId);
 }

@@ -25,7 +25,7 @@ public class Question extends TimeStamp {
     @Column(name = "question_title", nullable = false)
     private String title;
 
-    @Column(name = "question_content", nullable = false)
+    @Column(name = "question_content",length = 10000, nullable = false)
     private String content;
 
     @Column(name = "question_views")
