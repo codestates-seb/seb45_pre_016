@@ -13,13 +13,28 @@ import java.util.List;
 
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
+//    @ExceptionHandler
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public List<ErrorResponse.FieldError> handleMethodArgumentNotValidException(
+//            MethodArgumentNotValidException e) {
+//        final ErrorResponse response = ErrorResponse.of(e.getBindingResult());
+//        return response.getFieldErrors();
+//    }
+
+//    @ExceptionHandler
+//    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
+//            MethodArgumentNotValidException e) {
+//        ErrorResponse response = ErrorResponse.of(e.getBindingResult());
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//    }
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public List<ErrorResponse.FieldError> handleMethodArgumentNotValidException(
+    public ErrorResponse handleMethodArgumentNotValidException(
             MethodArgumentNotValidException e) {
         final ErrorResponse response = ErrorResponse.of(e.getBindingResult());
-        return response.getFieldErrors();
+        return response;
     }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public List<ErrorResponse.ConstraintViolationError> handleConstraintViolationException(
@@ -32,4 +47,12 @@ public class GlobalExceptionAdvice {
 //        final ErrorResponse.ExceptionStatus response = ErrorResponse.exceptionStatus(e.getExceptionCode());
 //        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getExceptionCode().getStatus()));
 //    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse exceptionExample(BusinessLogicException e){
+        final ErrorResponse response = ErrorResponse.of(HttpStatus.NOT_FOUND, e.getMessage());
+
+        return response;
+    }
 }

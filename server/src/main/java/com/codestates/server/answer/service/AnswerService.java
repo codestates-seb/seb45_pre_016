@@ -47,8 +47,8 @@ public class AnswerService {
         }else {
             throw new RuntimeException("에러발생");
         }
-
     }
+
 
     public Answer updateAnswer(Answer answer, long questionId, long userId) {
         Question question = questionService.findQuestion(questionId);

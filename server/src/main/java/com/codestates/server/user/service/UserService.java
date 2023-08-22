@@ -94,7 +94,7 @@ public class UserService {
             Answer userAnswer = new Answer();
             userAnswer.setAnswerId(answer.getAnswerId());
             userAnswer.setContent(answer.getContent());
-            userAnswer.setCreated_At(answer.getCreated_At());
+            userAnswer.setCreatedAt(answer.getCreatedAt());
             userAnswerList.add(userAnswer);
         }
 
