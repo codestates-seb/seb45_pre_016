@@ -31,7 +31,7 @@ public interface AnswerMapper {
             answerResponseDto.setUserId(answer.getUser().getUserId());
             answerResponseDto.setAnswerId(answer.getAnswerId());
             answerResponseDto.setContent(answer.getContent());
-            answerResponseDto.setModified_At(answer.getModified_At());
+            answerResponseDto.setModified_At(answer.getModifiedAt());
             return answerResponseDto;
         }
     }

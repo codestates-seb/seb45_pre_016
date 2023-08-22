@@ -83,7 +83,7 @@ public class User {
 
             userAnswerInfo.setAnswerId(answer.getAnswerId());
             userAnswerInfo.setContent(answer.getContent());
-            userAnswerInfo.setCreatedAt(answer.getCreated_At());
+            userAnswerInfo.setCreatedAt(answer.getCreatedAt());
 
             userAnswerInfos.add(userAnswerInfo);
         }
