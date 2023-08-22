@@ -1,10 +1,11 @@
 package com.codestates.server.question.service;
 
-import com.codestates.server.auth.utils.AuthUserUtils;
+
 import com.codestates.server.exception.BusinessLogicException;
 import com.codestates.server.exception.ExceptionCode;
 import com.codestates.server.question.entity.Question;
 import com.codestates.server.question.repository.QuestionRepository;
+import com.codestates.server.security.auth.utils.AuthUserUtils;
 import com.codestates.server.user.entity.User;
 import com.codestates.server.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;

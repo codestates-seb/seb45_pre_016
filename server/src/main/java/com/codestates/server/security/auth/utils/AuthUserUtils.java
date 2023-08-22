@@ -1,5 +1,7 @@
-package com.codestates.server.auth.utils;
+package com.codestates.server.security.auth.utils;
 
+import com.codestates.server.exception.BusinessLogicException;
+import com.codestates.server.exception.ExceptionCode;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -18,7 +20,7 @@ public class AuthUserUtils {
 
         // 사용자가 인증되지 않거나 익명인지 확인하고 그렇다면 예외 던지기
         if(authentication.getName() == null || authentication.getName().equals("anonymousUser")) {
-            throw new RuntimeException();   // 🚨 예외처리
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);   // 🚨 예외처리
         }
         // 인증된 사용자를 나타내는 인증 객체 반환
         authentication.getPrincipal();

@@ -1,5 +1,7 @@
 package com.codestates.server.security.auth.userdetails;
 
+import com.codestates.server.exception.BusinessLogicException;
+import com.codestates.server.exception.ExceptionCode;
 import com.codestates.server.security.auth.utils.CustomAuthorityUtils;
 import com.codestates.server.user.entity.User;
 import com.codestates.server.user.repository.UserRepository;
@@ -25,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> optionalUser = userRepository.findByEmail(username);
         // 🚨 예외 처리 해야함
-        User findUser = optionalUser.orElseThrow(() -> new RuntimeException());
+        User findUser = optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
         return new UserDetailsImpl(findUser);
     }
