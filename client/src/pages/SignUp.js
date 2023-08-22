@@ -14,6 +14,7 @@ const Wrap = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
+  margin-top: 56px;
   background-color: ${globalTokens.Gray[200].value};
   z-index: 800;
 `;

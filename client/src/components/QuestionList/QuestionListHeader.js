@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 function QuestionListHeader({ questionDataLength }) {
     // FIXME : 질문 갯수
     const [questionAmount, setQuestionAmount] = useState(1);
+    const userId = localStorage.getItem('userId');
 
     useEffect(() => setQuestionAmount(questionDataLength), [questionDataLength]);
 
@@ -17,9 +18,9 @@ function QuestionListHeader({ questionDataLength }) {
       <QuestionListHead >
           <div className="-list--header-title">
               <h1 className="q-heading">All Questions</h1>
-                <div>
+              {userId ? <div>
                     <AskButton>
-                      <Link to={"/ask"}>
+                      <Link to={"/questions/ask"}>
                         <button
                             id="askBtn"
                             type="button">
@@ -27,7 +28,7 @@ function QuestionListHeader({ questionDataLength }) {
                         </button>
                     </Link>
                     </AskButton>
-                </div>
+                </div> : <></>}
             </div>
             <div className="-list--header-sub">
                 <div className="sub-left">
