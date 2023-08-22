@@ -61,11 +61,13 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.GET, "/users").permitAll()     // userinfo (전체 회원 조회) -> 전체 접근 가능
                         .antMatchers(HttpMethod.GET, "/users/mypage/**").hasAnyRole("USER", "ADMIN")  // mypage 역할 가진 사용자
                         .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("USER")  // user 삭제 page -> 해당 user 만
+
                         .antMatchers(HttpMethod.POST, "/questions/ask").hasAnyRole("USER", "ADMIN") // user/ask 역할 가진 사용자
                         .antMatchers(HttpMethod.PATCH, "/questions/**").hasAnyRole("USER", "ADMIN")
                         .antMatchers(HttpMethod.GET, "/questions").permitAll()
-                        .antMatchers(HttpMethod.GET, "/guestions/**").permitAll()   // 질문 조회 -> 전체 접근 가능
+                        .antMatchers(HttpMethod.GET, "/questions/**").permitAll()   // 질문 조회 -> 전체 접근 가능
                         .antMatchers(HttpMethod.DELETE, "/questions/delete/**").hasAnyRole("USER", "ADMIN")
+
                         .antMatchers(HttpMethod.POST, "/questions/**/answers").hasAnyRole("USER", "ADMIN")
                         .antMatchers(HttpMethod.PATCH, "/questions/**/answers/**").hasAnyRole("USER","ADMIN")
                         .antMatchers(HttpMethod.DELETE, "/questions/**/answers/**").hasAnyRole("USER","ADMIN")
@@ -85,6 +87,8 @@ public class SecurityConfiguration {
 
         // 모든 출처에 대한 통신 허용 -> 직접 출처 작성
 //        configuration.setAllowedOrigins(Arrays.asList("*"));
+
+        configuration.setAllowedHeaders(Arrays.asList(""));
 
         // 허용할 출처 패턴 설정 -> 이전 버전으로 setAllowCredentials과 사용 가능
         configuration.setAllowedOriginPatterns(Arrays.asList("*"));
