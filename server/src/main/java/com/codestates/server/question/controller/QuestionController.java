@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequestMapping("/questions")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class QuestionController {
 
     private final QuestionService questionService;

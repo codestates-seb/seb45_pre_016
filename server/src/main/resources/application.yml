@@ -1,13 +1,12 @@
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2
   datasource:
-    url: jdbc:h2:mem:test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://pre016-db.cwpdnskv7nsg.ap-northeast-2.rds.amazonaws.com:3306/stackoverflow_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8"
+    username: '${MYSQL_DATABASE_USERNAME}'
+    password: '${MYSQL_DATABASE_PASSWORD}'
   jpa:          #JPA 설정
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -22,6 +21,6 @@ mail:
   address:
     admin: admin@gmail.com
 jwt:
-  key: "codestates45seb16ildanhaebojo123jagosipda1234567891098765432"
+  key: '${JWT_SECRET_KEY}'
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
