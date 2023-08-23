@@ -8,7 +8,53 @@ export const Flex = styled.div`
 export const AllContainer = styled.div`
   flex-grow: 1;
   padding: 24px;
+  padding-right: 250px;
+  margin-top: 24px;
   background-color: #f8f9f9;
+
+  .alert {
+    position: fixed;
+    top: 35%;
+    left: 37%;
+    margin: auto;
+    padding: 40px;
+    text-align: center;
+    border: 3px solid #c22d33;
+    border-radius: 20px;
+    background-color: #fdf2f2;
+    font-size: 15px;
+    z-index: 999;
+    & button {
+      background-color: #c22d33;
+      border: none;
+      width: fit-content;
+      height: fit-content;
+      border-radius: 15px;
+      margin-top: 30px;
+      padding: 20px;
+      color: #f8f9f9;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #fdf2f2;
+      color: #c22d33;
+    }
+
+    & p {
+      margin-top: 30px;
+      font-weight: 600;
+    }
+  }
+
+  .alert-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 1000px;
+    background-color: rgb(0, 0, 0, 0.2);
+  }
 
   .flexbox {
     margin-top: 16px;
@@ -95,7 +141,6 @@ export const Notice = styled.div`
 
 export const Container = styled.div`
   color: #232629;
-
   .content {
     display: flex;
     flex-direction: column;
@@ -132,7 +177,6 @@ export const Container = styled.div`
 
 export const Input = styled.input`
   width: inherit;
-  height: 14.994px;
   flex-grow: 1;
   margin: 4px 0;
   padding: 7.8px 9.1px;
@@ -205,7 +249,6 @@ export const ButtonStyle = styled.button`
 export const DiscardButton = styled.button`
   background-color: #f8f9f9;
   color: #c22d33;
-  margin-top: 4px;
   flex-grow: 1;
   width: fit-content;
   padding: 10.4px;
@@ -251,7 +294,7 @@ export const DropdownStyle = styled.div`
     flex-grow: 0;
     width: 18px;
     height: 18px;
-    padding-right: 16px;
+    margin-right: 16px;
   }
   .dropdown-option {
     flex-grow: 1;
@@ -317,7 +360,6 @@ export const Modal = styled.div`
 
   .discardq,
   .cancel {
-    height: 15px;
     width: fit-content;
     margin: 0px 4px;
     padding: 10.4px;
@@ -361,7 +403,6 @@ export const Modal = styled.div`
 `;
 
 export const QuestionDetailStyle = styled.div`
-  margin-top: 56px;
   padding: 24px;
   p {
     font-size: 27px;
@@ -382,27 +423,50 @@ export const QuestionDetailStyle = styled.div`
     padding: 0 16px 8px 0;
   }
   .edit,
-  .delete {
+  .delete,
+  .update {
     color: #6a737c;
   }
   .edit:hover,
-  .delete:hover {
+  .delete:hover,
+  .update {
     color: #838c95;
     cursor: pointer;
   }
   .content {
-    border: 1px solid red;
     height: fit-content;
+    padding: 20px;
   }
   .tagwrap {
     margin: 24px 0 12px 0;
+    display: flex;
+    flex-direction: row;
+  }
+  .tag {
+    width: fit-content;
+    margin: 0 6px;
+    padding: 5px;
+    background-color: #e1ecf4;
+    border-radius: 4px;
+    color: #39739d;
+  }
+  .x {
+    background-color: #e1ecf4;
+    border: none;
+    cursor: pointer;
   }
 `;
+
 export const Answer = styled.div`
   width: 100%;
   .answer-title {
     font-size: 19px;
     margin: 0 0 19px;
     padding: 20px 0 0;
+  }
+  textarea {
+    border: 1px solid #babfc3;
+    resize: none;
+    padding: 20px;
   }
 `;

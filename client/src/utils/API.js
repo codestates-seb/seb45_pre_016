@@ -2,7 +2,6 @@ import axios from "axios";
 
 // axios.defaults.withCredentials = true; // 기본 설정에서 제거
 
-
 export const signUp = async (data) => {
   try {
     const res = await axios({
@@ -18,10 +17,7 @@ export const signUp = async (data) => {
 
 export const GetQuestions = async () => {
   try {
-    const response = await axios.get(
-      `http://43.201.157.40:8080/questions`,
-      
-    );
+    const response = await axios.get(`http://43.201.157.40:8080/questions`);
     const { data } = response;
     console.log(data);
     return response;
@@ -29,6 +25,8 @@ export const GetQuestions = async () => {
     console.log(e);
   }
 };
+
+
 export const PostAsk = async () => {
   try {
     const response = await axios.post(
@@ -47,13 +45,38 @@ export const PostAsk = async () => {
         },
       }
     );
-    console.log(response.data)
+    console.log(response.data);
 
     return response;
   } catch (e) {
     console.log(e);
   }
 };
+
+export const PatchPost = async () => {
+  try {
+    const response = await axios.patch(
+      "http://43.201.157.40:8080/questions/ask",
+      {
+        // 서버측에서 유저아이디 받기
+        userId: localStorage.getItem("userId"),
+        content: localStorage.getItem("content"),
+        title: localStorage.getItem("title"),
+        tagNames: ["java", "python"],
+      },
+      {
+        headers: {
+          Authorization: localStorage.getItem("Token"),
+          dataType: "json",
+        },
+      }
+    );
+    return response;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const PostAnswer = async () => {
   try {
     const response = await axios.post(
@@ -103,21 +126,14 @@ export const PatchAsk = async () => {
 export const DeleteAsk = async () => {
   try {
     const response = await axios.delete(
-      "http://43.201.157.40:8080/questions/ask",
-      {
-        data: {
-          // 서버측에서 유저아이디 받기
-          userId: localStorage.getItem("userId"),
-          content: localStorage.getItem("content"),
-          title: localStorage.getItem("title"),
-          tagNames: ["java", "python"],
-        },
-      },
+      "http://43.201.157.40:8080/questions/delete/8",
       {
         headers: {
           Authorization: localStorage.getItem("Token"),
           dataType: "json",
         },
+        // 서버측에서 유저아이디 받기
+        userId: localStorage.getItem("userId"),
       }
     );
     return response;
@@ -125,19 +141,3 @@ export const DeleteAsk = async () => {
     console.log(e);
   }
 };
-
-export const getUserInfo = async () => {
-  try {
-    const response = await axios.get("http://43.201.157.40:8080/mypage/1",
-    {
-      data : {
-        userId: localStorage.getItem("userId"),
-    },
-  },
-
-  );
-    return response;
-  } catch (e) {
-    console.log(e);
-  }
-}

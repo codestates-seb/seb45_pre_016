@@ -9,6 +9,7 @@ import Main from './pages/Main';
 import AskQuestions from './pages/AskQuestions';
 import QuestionDetail from './pages/QuestionDetails';
 import UserInfo from './pages/UserInfo';
+import AnswerUpdate from './pages/AnswerUpdate';
 
 function App() {
   
@@ -22,7 +23,8 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/questions/ask" element={<AskQuestions />}></Route>
-            <Route path="/questions/1" element={<QuestionDetail />}></Route>
+            <Route path="/questions/detail" element={<QuestionDetail />}></Route>
+            <Route path="/questions/detail/answer/update" element={<AnswerUpdate />}></Route>
             <Route path="/userinfo" element={<UserInfo />}></Route>
           </Routes>
         </div>

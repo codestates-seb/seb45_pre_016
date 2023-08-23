@@ -8,7 +8,6 @@ import {
   Description,
   Input,
   Container,
-  AllContainer,
   Textarea,
 } from "../tokens/Style";
 
@@ -27,11 +26,9 @@ export const PostInput = (titleValue) => {
       setContent(e.target.value);
     }
   };
-  
+
   localStorage.setItem("title", title);
   localStorage.setItem("content", content);
-
-
 
   const filteredInfoList = filteredInfoId.map((filtered) => {
     return (
@@ -74,12 +71,12 @@ export const PostInput = (titleValue) => {
   });
 
   return (
-    <AllContainer key="" className="post-review">
+    <>
       <Title>Review your question</Title>
       <Description>
         Please do a final review of your question and then post.
       </Description>
       <Container>{filteredInfoList}</Container>
-    </AllContainer>
+    </>
   );
 };
