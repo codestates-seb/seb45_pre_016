@@ -1,10 +1,16 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/react-in-jsx-scope */
 import { Modal } from "../tokens/Style";
+import { useNavigate } from "react-router-dom";
 
 const ModalBasic = ({ setModalOpen }) => {
+
+  const navigator = useNavigate();
+
   const resetQuestion = () => {
-    console.log("질문 전체 조회 페이지로 이동")
+  navigator('/');
+  localStorage.removeItem('title');
+  localStorage.removeItem('content')
   }
 
   const closeModal = (e) => {

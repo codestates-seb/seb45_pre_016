@@ -30,7 +30,7 @@ function QuestionList() {
     <QuestionListPage>
       <QuestionListContainer>
         <QuestionListHeader questionDataLength={questionData.length} />
-        <QuestionListContents questionData={questionData} />
+        <QuestionListContents questionData={questionData}/>
       </QuestionListContainer>
     </QuestionListPage>
   );

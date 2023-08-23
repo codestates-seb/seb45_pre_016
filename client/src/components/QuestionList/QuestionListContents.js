@@ -5,7 +5,20 @@ import { ListItem, QuestionTitle } from "./Styles";
 
 import { Link } from "react-router-dom";
 
+import QuestionDetail from "../../pages/QuestionDetails";
+
+import { useState } from "react";
+
 function QuestionListContents({ questionData }) {
+
+	const [currentParam, setCurrentParam] = useState();
+
+	const sendParam = (e) => {
+		setCurrentParam(e.target.value)
+		console.log(currentParam)
+	}
+
+
 	return (
 		<ListItem >
 			{questionData.map((item) => {
@@ -50,13 +63,15 @@ function QuestionListContents({ questionData }) {
 						<div className="-list-item--right">
 							<QuestionTitle>
 								{/* FIXME :  question_id를 가진페이지로 이동해야 한다. 그리고 해당페이지는 제목, 질문 등 정보를 가져야 함.*/}
-								<Link to={`/questions/${item.data.questionId}`} className="-item--right--title">{item.data.title}</Link>
+								<Link to="/questions/detail" className="-item--right--title"><div value={item.data.questionId} onClick={sendParam} >{item.data.title}</div></Link>
 							</QuestionTitle>
 							<p className="-item--right--preview">{bodyTextFilter(item.data.content)}</p>
 							<p className="-item--right--username">
 								{item.userId} {item.data.modified_At}
 							</p>
 						</div>
+						<div className="hidden"><QuestionDetail  param={currentParam}/></div>
+
 					</div>
 				);
 			})}

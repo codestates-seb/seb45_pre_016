@@ -17,6 +17,8 @@ export const QuestionListPage = styled.div`
   font-size: ${globalTokens.fontSize[1].value}px;
   color: ${globalTokens.Gray[800].value};
 
+  .hidden {display: none}
+
 `;
 
 export const QuestionListContainer = styled.div`
