@@ -26,27 +26,25 @@
 ## 🌎 배포 링크
 
 ---
-📃 배포 링크 : [Stack Over Flow](http://pre016client.s3-website.ap-northeast-2.amazonaws.com/, "stack over flow")
+📃 배포 링크 : [Stack Over Flow](http://pre016client.s3-website.ap-northeast-2.amazonaws.com/ "stack over flow")
  
-</br>
-</br>
+<br/>
+<br/>
 
 ## 🚀 Demo
 
 ---
-| 회원가입                                           | 로그인                                                                                                                                            | 로그아웃                                          |
-|------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
-| <img src="이미지1" width="300px" height="300px">  | <img src="이미지2" width="300px" height="300px">                                                                                                  | <img src="이미지3" width="300px" height="300px"> |
-| 질문페이지                                          | 상세페이지                                                                                                                                          | 검색페이지                                         |
-| <img src="이미지4" width="300px" height="300px">  | <img src="이미지5" width="300px" height="300px">                                                                                                  | <img src="이미지6" width="300px" height="300px"> |
-| 질문작성                                           | 질문수정                                                                                                                                           | 답변수정                                          |
-| <img src="이미지7" width="300px" height="300px">  | <img src="이미지8" width="300px" height="300px">                                                                                                  | <img src="이미지9" width="300px" height="300px"> |
-| 태그                                             | 유저                                                                                                                                             
-| <img src="이미지10" width="300px" height="300px"> | <img src="이미지11" width="300px" height="300px"> 
+
+| 회원 가입                                                                                                                                          | 로그인                                                                                                                                            | 질문 조회                                                                                                                                    |
+|------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| <img src="https://github.com/codestates-seb/seb45_pre_016/assets/130022922/9737708e-51b3-4b61-b849-1ef14484fb61" width="400px" height="200px"> | <img src="https://github.com/codestates-seb/seb45_pre_016/assets/130022922/d9406ee5-5329-4139-bfcd-9b75ff54ac50" width="400px" height="200px"> | <img src="https://github.com/codestates-seb/seb45_pre_016/assets/130022922/80e3edb0-b312-4dfb-9340-2d1a9310ffc4" width="400px" height="200px"> |
+| 질문 작성                                                                                                                                          | 답변 작성                                                                                                                                          | 답변 수정                                                                                                                                    |
+| <img src="https://github.com/codestates-seb/seb45_pre_016/assets/130022922/baff0b58-a4a9-4619-a534-761ce9088f0f" width="400px" height="200px"> | <img src="https://github.com/codestates-seb/seb45_pre_016/assets/130022922/0959b5e9-f0db-4713-a2bc-9361e68c3b53" width="400px" height="200px"> | <img src="https://github.com/codestates-seb/seb45_pre_016/assets/130022922/b6911367-2834-4d3f-ab49-d5316f25690f" width="400px" height="200px"> |
+| 유저 마이페이지                                                                                                                                       | 질문수정                                                                                                                                           |                                                                                                                                         |
+| <img src="https://github.com/codestates-seb/seb45_pre_016/assets/130022922/265311a3-7385-4551-ad09-d61f54cd4ad0" width="400px" height="200px"> | <img src="https://github.com/codestates-seb/seb45_pre_016/assets/130022922/d1d6b56f-ad51-4731-b0d4-34cd6fbba58f" width="400px" height="200px"> |                                                                                             | 
 
 
-<br />
-<br />
+<br/>
 
 ## 🧑‍💻 기술 스택
 
@@ -83,7 +81,7 @@
 ## 📒 일단해보죠 Notion 페이지
 
 ---
-📃 노션 링크 : [일단🌞보죠 Notion](https://www.notion.so/da0f924e6d454c79ab455547eb110e08, "notion link")
+📃 노션 링크 : [일단🌞보죠 Notion](https://www.notion.so/da0f924e6d454c79ab455547eb110e08?pvs=4 "notion link")
 
 <br/>
 
