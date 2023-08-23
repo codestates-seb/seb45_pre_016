@@ -4,22 +4,7 @@ import React from 'react';
 import { FooterContainer,FooterLogo } from './Styles';
 
 const Footer = () => {
-//   const [isVisible, setIsVisible] = useState(true);
-
-//   useEffect(() => {
-//     const handleScroll = () => {
-//       const scrollY = window.scrollY || window.pageYOffset;
-//       setIsVisible(scrollY > 0); // 스크롤이 0이 아닐 때 보이도록 설정
-//     };
-
-//     window.addEventListener('scroll', handleScroll);
-
-//     return () => {
-//       window.removeEventListener('scroll', handleScroll);
-//     };
-//   }, []);
-
-
+  
   return (
     <FooterContainer>
         <div className="footer">

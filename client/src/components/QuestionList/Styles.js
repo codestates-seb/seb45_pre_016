@@ -9,6 +9,8 @@ export const QuestionListPage = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 54px;
+  margin-bottom: 322px;
+  height: 100%;
 
   font-family: ${globalTokens.Basic.fontFamily.value};
   font-style: normal;
@@ -20,7 +22,7 @@ export const QuestionListPage = styled.div`
 export const QuestionListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  border-left: 1px solid ${globalTokens.Gray[300].value};
+  /* border-left: 1px solid ${globalTokens.Gray[300].value}; */
 `;
 
 
@@ -30,7 +32,7 @@ export const QuestionListContainer = styled.div`
 export const QuestionListHead = styled.div`
 
     padding: 24px;
-    width: 1100px;
+    width: 100%;
     border-bottom: 1px solid ${globalTokens.Gray[300].value};
     display: flex;
     flex-direction: column;
@@ -145,7 +147,7 @@ export const FilterBtn = styled.button`
 export const ListItem = styled.div`
  
     /* padding: 16px; */
-    width: 1100px;
+    width: 100%;
     /* border: 0.3px solid black; */
     display: flex;
     flex-direction: column;

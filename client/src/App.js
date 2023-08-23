@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Main from './pages/Main';
 import AskQuestions from './pages/AskQuestions';
 import QuestionDetail from './pages/QuestionDetails';
+import UserInfo from './pages/UserInfo';
 
 function App() {
   
@@ -22,6 +23,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/questions/ask" element={<AskQuestions />}></Route>
             <Route path="/questions/1" element={<QuestionDetail />}></Route>
+            <Route path="/userinfo" element={<UserInfo />}></Route>
           </Routes>
         </div>
       </Router>

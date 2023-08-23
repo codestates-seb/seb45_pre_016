@@ -7,7 +7,6 @@ export const FooterContainer = styled.footer`
   flex-direction: row;
   justify-content: center;
   padding: 0px;
-  isolation: isolate;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -18,9 +17,6 @@ export const FooterContainer = styled.footer`
 
   font-family: ${globalTokens.Basic.fontFamily.value};
   font-size: ${globalTokens.Basic.fontSize.value}px;
-  
-  transform: translateY(${props => (props.visible ? '0' : '100%')});
-  transition: transform 0.3s ease-in-out;
   
 
   .footer {

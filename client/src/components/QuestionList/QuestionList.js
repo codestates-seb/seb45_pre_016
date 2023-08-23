@@ -1,17 +1,16 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { QuestionListPage, QuestionListContainer } from "./Styles";
-// import QuestionListContents from "./QuestionListContents";
-// import QuestionListHeader from "./QuestionListHeader";
+import QuestionListContents from "./QuestionListContents";
+import QuestionListHeader from "./QuestionListHeader";
 // import SidebarLeft from "../component/SidebarLeft";
 
 // FIXME
-import mockData from "./mockData.json";
 import { GetQuestions } from "../../utils/API";
 
 function QuestionList() {
   // FIXME
-  const [questionData, setQuestionData] = useState(mockData);
+  const [questionData, setQuestionData] = useState([]);
 
   // FIXME : 화면이 렌더링되면 미리보기 정보를 가져오게
   // useEffect(() => fetchQuestions(), []);s
@@ -19,14 +18,19 @@ function QuestionList() {
   // 질문리스트 불러오는 함수s
   useEffect(() => {
     GetQuestions()
-    .then((res)=>res.data)
-      },[]);
+    .then((response) => { 
+      setQuestionData(response.data);
+      })
+      .catch((error) => {
+        console.log('Error fetching questions:', error);
+      });
+    },[]);
 
   return (
     <QuestionListPage>
       <QuestionListContainer>
-        {/* <QuestionListHeader questionDataLength={questionData.length} /> */}
-        {/* <QuestionListContents questionData={questionData} /> */}
+        <QuestionListHeader questionDataLength={questionData.length} />
+        <QuestionListContents questionData={questionData} />
       </QuestionListContainer>
     </QuestionListPage>
   );

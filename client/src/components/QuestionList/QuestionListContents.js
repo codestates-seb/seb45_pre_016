@@ -21,16 +21,16 @@ function QuestionListContents({ questionData }) {
 				return (
 					<div
 						className="-list-items"
-						key={item.question_id}>
+						key={item.data.question_id}>
 						<div className="-list-item--left">
 							<span
 								className={`preview-votes ${
-									item.votes === "0" ? "" : "preview-bolder"
+									item.data.votes === "0" ? "" : "preview-bolder"
 								}`}>
-								{item.votes} votes
+								{item.data.votes} votes
 							</span>
 
-							{item.selection ? (
+							{item.data.selection ? (
 								<span className="preview-answers selection">
 									<i className="fa-solid fa-check"></i>answers
 								</span>
@@ -40,21 +40,21 @@ function QuestionListContents({ questionData }) {
 
 							<span
 								className={`preview-views ${
-									item.view_count !== "0"
+									item.data.views !== "0"
 										? "preview-bolder preview-views--orange "
 										: ""
 								}`}>
-								{parseInt(item.view_count, 10)} views
+								{parseInt(item.data.views, 10)} views
 							</span>
 						</div>
 						<div className="-list-item--right">
 							<QuestionTitle>
 								{/* FIXME :  question_id를 가진페이지로 이동해야 한다. 그리고 해당페이지는 제목, 질문 등 정보를 가져야 함.*/}
-								<Link to={`/questions/${item.question_id}`} className="-item--right--title">{item.title}</Link>
+								<Link to={`/questions/${item.data.questionId}`} className="-item--right--title">{item.data.title}</Link>
 							</QuestionTitle>
-							<p className="-item--right--preview">{bodyTextFilter(item.body)}</p>
+							<p className="-item--right--preview">{bodyTextFilter(item.data.content)}</p>
 							<p className="-item--right--username">
-								{"userName"} {item.created_at}
+								{item.userId} {item.data.modified_At}
 							</p>
 						</div>
 					</div>
@@ -68,13 +68,23 @@ export default QuestionListContents;
 
 /* 
 {
-	"question_id": 1,
-	"title": "Private Hell 36",
-	"body": "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst.",
-	"view_count": "9",
-	"created_at": "2023-07-15 09:49:13",
-	"modified_at": "2023-01-23T08:03:50Z",
-	"votes": "081",
-	"selection": false
+	"userId": 1,
+        "data": {
+            "questionId": 2,
+            "title": "안녕",
+            "content": "하세요\n\n이것은 테스트",
+            "views": 0,
+            "modified_At": "2023-08-21T22:13:27.763134",
+            "tags": [
+                {
+                    "tagId": 1,
+                    "tagName": "java"
+                },
+                {
+                    "tagId": 2,
+                    "tagName": "python"
+                }
+            ],
+            "answers": []
 }
 */

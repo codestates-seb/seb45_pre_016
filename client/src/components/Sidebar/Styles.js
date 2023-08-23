@@ -14,10 +14,12 @@ export const SidebarContainer = styled.div`
 
 export const SidebarMenu = styled.div`
   position: sticky;
-  margin-bottom: 0 0 8px;
+  margin-bottom: 8px;
   padding-top: 24px;
-
+  border-right: 1px solid ${globalTokens.Gray[300].value};
+  
   width: 164px;
+  height: 100%;
 
   .nav-links{
     padding: 0;
