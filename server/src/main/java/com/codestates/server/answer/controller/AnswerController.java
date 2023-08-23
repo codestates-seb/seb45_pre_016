@@ -40,7 +40,7 @@ public class AnswerController {
 
             Answer createdAnswer = answerService.createAnswer(
                     mapper.answerPostDtoToAnswer(answerPostDto), questionId, answerPostDto.getUserId());
-            URI location = UriCreator.createUri("/questions/" + questionId, createdAnswer.getAnswerId());
+            URI location = UriCreator.createUri("/questions/" + questionId +"/answers/", createdAnswer.getAnswerId());
             return ResponseEntity.created(location).build();
 
         } catch (BusinessLogicException e) {
