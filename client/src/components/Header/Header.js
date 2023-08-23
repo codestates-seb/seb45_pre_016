@@ -66,10 +66,11 @@ const Header = () => {
 
       {userId ? (
         <LoginStateButtonContainer>
-          <UserAvatar
-            src="https://i.pinimg.com/564x/18/b4/69/18b4699032c3019658996090bbe54d3f.jpg"
-            alt="useravatar"
-          />
+          <Link to='/userinfo'>
+          <UserAvatar src="https://i.pinimg.com/564x/18/b4/69/18b4699032c3019658996090bbe54d3f.jpg"
+            alt="useravatar">
+            </UserAvatar>
+            </Link>
           <LogoutButton>
             <Link to="/" className="logout-button" onClick={onClickHandler}>
               Logout

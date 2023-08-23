@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import globalTokens from '../../tokens/global.json';
 
 export const HeaderContainer = styled.header`
-  padding-right: 12px;
   position: fixed;
   top: 0;
   display: flex;
@@ -10,7 +9,6 @@ export const HeaderContainer = styled.header`
   justify-content: center;
   align-items: center;
   flex-wrap: nowrap;
-  width: 100%;
   height: 56px;
   width: 100%;
   background-color: ${globalTokens.White.value};

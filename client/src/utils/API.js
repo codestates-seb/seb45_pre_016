@@ -125,3 +125,19 @@ export const DeleteAsk = async () => {
     console.log(e);
   }
 };
+
+export const getUserInfo = async () => {
+  try {
+    const response = await axios.get("http://43.201.157.40:8080/mypage/1",
+    {
+      data : {
+        userId: localStorage.getItem("userId"),
+    },
+  },
+
+  );
+    return response;
+  } catch (e) {
+    console.log(e);
+  }
+}
